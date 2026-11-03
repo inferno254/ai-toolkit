@@ -1,0 +1,20 @@
+{
+  "name": "in-situ-web-extension",
+  "version": "1.0.0",
+  "description": "In-Situ Web Adaptation Layer Manifest V3 Extension for TalkBack Sheng Mode",
+  "scripts": {
+    "build": "webpack --mode production",
+    "watch": "webpack --watch --mode development"
+  },
+  "dependencies": {
+    "sheng-core-engine": "file:../sheng-core-engine"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.3.7",
+    "copy-webpack-plugin": "^12.0.2",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.4.0",
+    "webpack": "^5.91.0",
+    "webpack-cli": "^5.1.4"
+  }
+}

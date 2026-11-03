@@ -1,0 +1,25 @@
+{
+  "manifest_version": 3,
+  "name": "Sheng Mode for Screen Readers (TalkBack Adapter)",
+  "version": "1.0.0",
+  "description": "Smooths Sheng and Kenyan code-switching phonetics for TalkBack and screen readers while preserving visual layout.",
+  "permissions": [
+    "storage",
+    "activeTab"
+  ],
+  "action": {
+    "default_popup": "public/popup.html",
+    "default_title": "Sheng Mode Settings"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["dist/content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "background": {
+    "service_worker": "dist/background.js"
+  }
+}
+

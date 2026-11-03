@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sheng Mode Settings</title>
+  <style>
+    body {
+      width: 320px;
+      font-family: system-ui, -apple-system, sans-serif;
+      padding: 16px;
+      margin: 0;
+      color: #1a1a1a;
+      background: #fafafa;
+    }
+    h1 {
+      font-size: 1.1rem;
+      margin: 0 0 12px 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .badge {
+      background: #0b57d0;
+      color: white;
+      font-size: 0.7rem;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+      background: white;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #e0e0e0;
+    }
+    label {
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+    .field {
+      margin-bottom: 12px;
+    }
+    .field label {
+      display: block;
+      font-size: 0.8rem;
+      margin-bottom: 4px;
+      color: #555;
+    }
+    select, input[type="password"], input[type="text"] {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 0.85rem;
+    }
+    .hint {
+      font-size: 0.75rem;
+      color: #666;
+      margin-top: 4px;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      background: #0b57d0;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0842a0;
+    }
+    .status {
+      margin-top: 8px;
+      font-size: 0.8rem;
+      text-align: center;
+      color: #2e7d32;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>Sheng Mode <span class="badge">TalkBack</span></h1>
+
+  <div class="toggle-row">
+    <label for="enable-toggle">Enable Phonetic Smoothing</label>
+    <input type="checkbox" id="enable-toggle" checked>
+  </div>
+
+  <div class="field">
+    <label for="tts-mode">Screen Reader Engine Voice</label>
+    <select id="tts-mode">
+      <option value="en" selected>English Voice (Google TTS en-US/UK)</option>
+      <option value="sw">Kiswahili Voice (Standard Swahili)</option>
+    </select>
+    <div class="hint">Tuned to eliminate spelling-out of local syllables.</div>
+  </div>
+
+  <div class="field">
+    <label for="gemini-key">Gemini API Key (Optional AI Polish)</label>
+    <input type="password" id="gemini-key" placeholder="Enter API Key">
+    <div class="hint">Fast-path lexicon runs offline first. AI handles ambiguous new slang.</div>
+  </div>
+
+  <button id="save-btn">Save Settings</button>
+  <div id="status-msg" class="status">Settings saved!</div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
+

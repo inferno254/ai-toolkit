@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sheng Mode Screen Reader — Standalone Paste & Read</title>
+  <style>
+    :root {
+      --bg-color: #0f172a;
+      --card-bg: #1e293b;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --primary: #38bdf8;
+      --primary-hover: #0284c7;
+      --accent: #f59e0b;
+      --success: #22c55e;
+      --border: #334155;
+      --focus-ring: #60a5fa;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      line-height: 1.6;
+      padding: 24px 16px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    header {
+      width: 100%;
+      max-width: 860px;
+      margin-bottom: 24px;
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 16px;
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .badge {
+      font-size: 0.75rem;
+      background: var(--primary);
+      color: #000;
+      font-weight: bold;
+      padding: 4px 8px;
+      border-radius: 9999px;
+      text-transform: uppercase;
+    }
+
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-top: 6px;
+    }
+
+    main {
+      width: 100%;
+      max-width: 860px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+    }
+
+    .card h2 {
+      font-size: 1.2rem;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 120px;
+      padding: 12px;
+      background: #090d16;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text-main);
+      font-size: 1rem;
+      font-family: inherit;
+      resize: vertical;
+    }
+
+    textarea:focus, select:focus, input:focus, button:focus {
+      outline: 3px solid var(--focus-ring);
+      outline-offset: 2px;
+    }
+
+    .preset-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .preset-btn {
+      background: #334155;
+      color: var(--text-main);
+      border: none;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      cursor: pointer;
+    }
+
+    .preset-btn:hover {
+      background: #475569;
+    }
+
+    .controls-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-top: 12px;
+    }
+
+    select, input[type="text"], input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      background: #090d16;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text-main);
+      font-size: 0.95rem;
+    }
+
+    .action-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .btn {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.15s ease;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #020817;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-hover);
+      color: #fff;
+    }
+
+    .btn-secondary {
+      background: #334155;
+      color: var(--text-main);
+    }
+
+    .btn-secondary:hover {
+      background: #475569;
+    }
+
+    .btn-accent {
+      background: var(--accent);
+      color: #000;
+    }
+
+    .output-container {
+      margin-top: 16px;
+    }
+
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 12px;
+    }
+
+    @media (max-width: 640px) {
+      .comparison-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .pane {
+      background: #090d16;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+    }
+
+    .pane-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+      color: var(--text-muted);
+    }
+
+    .pane-content {
+      font-size: 1.1rem;
+      line-height: 1.7;
+    }
+
+    .stats-badge {
+      display: inline-block;
+      font-size: 0.8rem;
+      padding: 3px 8px;
+      background: #14532d;
+      color: #4ade80;
+      border-radius: 4px;
+      margin-top: 8px;
+    }
+
+    .live-region-notice {
+      margin-top: 12px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-left: 3px solid var(--primary);
+      padding-left: 10px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>
+      Sheng Mode Standalone Reader
+      <span class="badge">TalkBack Ready</span>
+    </h1>
+    <p class="subtitle">
+      Zero semantic translation. Pure phonetic smoothing for natural TalkBack voice playback.
+    </p>
+  </header>
+
+  <main>
+    <section class="card" aria-labelledby="input-heading">
+      <h2 id="input-heading">1. Input Local Kenyan Content</h2>
+
+      <label for="snippet-input">Paste or type text containing English, Kiswahili, or Sheng code-switching:</label>
+      <textarea id="snippet-input" placeholder="e.g. Leo tuko rada ya mathree kwa stage ya mtaani, mbogi mzima iko form ya sherehe..."></textarea>
+
+      <div>
+        <label>Quick Presets for Co-Designer Validation:</label>
+        <div class="preset-container">
+          <button type="button" class="preset-btn" data-preset="Leo tuko rada ya mathree kwa stage ya mtaani, mbogi mzima iko form ya sherehe.">Preset 1: Matatu & Party</button>
+          <button type="button" class="preset-btn" data-preset="Buda usipanic, chapaa imelipwa na morio wa gava tayari bila ngori.">Preset 2: Police & Money</button>
+          <button type="button" class="preset-btn" data-preset="Wasee wote wameshika luku fiti, wanadhokoma kuelekea CBD bila noma.">Preset 3: Clothes & Walking</button>
+          <button type="button" class="preset-btn" data-preset="Niaje maze, keja iko poa lakini mullah imekatika kuruka.">Preset 4: House & Broke</button>
+        </div>
+      </div>
+
+      <div class="controls-grid">
+        <div>
+          <label for="tts-voice-select">Screen Reader Voice Target</label>
+          <select id="tts-voice-select">
+            <option value="en" selected>English Engine (Google TTS en-US/UK)</option>
+            <option value="sw">Kiswahili Engine (Standard Swahili)</option>
+          </select>
+        </div>
+        <div>
+          <label for="api-key-input">Gemini API Key (Optional Polish)</label>
+          <input type="password" id="api-key-input" placeholder="Optional for ambiguous estate slang">
+        </div>
+      </div>
+
+      <div class="action-row">
+        <button id="process-btn" class="btn btn-primary" aria-label="Process and smooth phonetics">
+          ⚡ Smooth Phonetics
+        </button>
+        <button id="play-original-btn" class="btn btn-secondary" aria-label="Listen to unadapted text audio">
+          🔊 Hear Unsmoothed (Original)
+        </button>
+        <button id="play-adapted-btn" class="btn btn-accent" aria-label="Listen to smoothed TalkBack phonetics audio">
+          ✨ Hear Smoothed (TalkBack Mode)
+        </button>
+      </div>
+    </section>
+
+    <section class="card" aria-labelledby="output-heading">
+      <h2 id="output-heading">2. TalkBack Accessibility Surface</h2>
+
+      <div class="comparison-grid">
+        <div class="pane">
+          <div class="pane-title">Visual Text (Original Authenticity)</div>
+          <div id="visual-output" class="pane-content" tabindex="0">
+            [No text processed yet]
+          </div>
+        </div>
+
+        <div class="pane">
+          <div class="pane-title">TalkBack Phonetic Stream (What Voice Reads)</div>
+          <div id="phonetic-output" class="pane-content" tabindex="0" aria-live="polite">
+            [No text processed yet]
+          </div>
+        </div>
+      </div>
+
+      <div id="stats-container"></div>
+
+      <div class="live-region-notice" role="note">
+        <strong>TalkBack Note:</strong> The right panel is linked to an <code>aria-live="polite"</code> region. Swiping or navigating via TalkBack will immediately vocalize the smoothed syllabic syllables.
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="/src/main.ts"></script>
+</body>
+</html>
+
