@@ -1367,6 +1367,2112 @@
         "noun",
         "business"
       ]
+    },
+    {
+      "term": "masanse",
+      "phoneticEn": "masanseh",
+      "phoneticSw": "masanse",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=264, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "chogi",
+      "phoneticEn": "chogee",
+      "phoneticSw": "chogi",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=254, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "yut",
+      "phoneticEn": "yut",
+      "phoneticSw": "yut",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=251, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "mpini",
+      "phoneticEn": "impinee",
+      "phoneticSw": "mpini",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=238, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "bukla",
+      "phoneticEn": "bukla",
+      "phoneticSw": "bukla",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=234, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "kibronje",
+      "phoneticEn": "kibronjeh",
+      "phoneticSw": "kibronje",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=193, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "mtaa",
+      "phoneticEn": "imtah",
+      "phoneticSw": "mtaa",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=155, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "ngweks",
+      "phoneticEn": "ingweks",
+      "phoneticSw": "ngweks",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=146, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "pima",
+      "phoneticEn": "pima",
+      "phoneticSw": "pima",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=141, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "manzi",
+      "phoneticEn": "manzee",
+      "phoneticSw": "manzi",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=133, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "hosi",
+      "phoneticEn": "hosee",
+      "phoneticSw": "hosi",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=132, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "mayut",
+      "phoneticEn": "mayut",
+      "phoneticSw": "mayut",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=132, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "mbexe",
+      "phoneticEn": "imbexeh",
+      "phoneticSw": "mbexe",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=85, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "mokoro",
+      "phoneticEn": "mokoro",
+      "phoneticSw": "mokoro",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=78, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "nditni",
+      "phoneticEn": "inditnee",
+      "phoneticSw": "nditni",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=75, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "mzae",
+      "phoneticEn": "imzae",
+      "phoneticSw": "mzae",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=74, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "manjege",
+      "phoneticEn": "manjegeh",
+      "phoneticSw": "manjege",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=68, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "mtu",
+      "phoneticEn": "imtu",
+      "phoneticSw": "mtu",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=64, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "riba",
+      "phoneticEn": "riba",
+      "phoneticSw": "riba",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=61, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "mse",
+      "phoneticEn": "imseh",
+      "phoneticSw": "mse",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=54, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "mthama",
+      "phoneticEn": "imthama",
+      "phoneticSw": "mthama",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=51, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "nganya",
+      "phoneticEn": "inganya",
+      "phoneticSw": "nganya",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=51, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "hivi",
+      "phoneticEn": "hivee",
+      "phoneticSw": "hivi",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=49, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "mtoi",
+      "phoneticEn": "imtoi",
+      "phoneticSw": "mtoi",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=48, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "mob",
+      "phoneticEn": "mob",
+      "phoneticSw": "mob",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=47, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "hizi",
+      "phoneticEn": "hizee",
+      "phoneticSw": "hizi",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=47, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "mtasis",
+      "phoneticEn": "imtasis",
+      "phoneticSw": "mtasis",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=47, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "mjango",
+      "phoneticEn": "mjango",
+      "phoneticSw": "mjango",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=47, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "utat",
+      "phoneticEn": "utat",
+      "phoneticSw": "utat",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=46, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "njumu",
+      "phoneticEn": "injumu",
+      "phoneticSw": "njumu",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=44, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "othumo",
+      "phoneticEn": "othumo",
+      "phoneticSw": "othumo",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=44, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "tao",
+      "phoneticEn": "tao",
+      "phoneticSw": "tao",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=43, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "jamo",
+      "phoneticEn": "jamo",
+      "phoneticSw": "jamo",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=42, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "shagz",
+      "phoneticEn": "shagz",
+      "phoneticSw": "shagz",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=42, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "marada",
+      "phoneticEn": "marada",
+      "phoneticSw": "marada",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=42, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "mabombee",
+      "phoneticEn": "mabombee",
+      "phoneticSw": "mabombee",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=42, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "kanjo",
+      "phoneticEn": "kanjo",
+      "phoneticSw": "kanjo",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=41, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "mayengs",
+      "phoneticEn": "mayengs",
+      "phoneticSw": "mayengs",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=41, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "watu",
+      "phoneticEn": "watu",
+      "phoneticSw": "watu",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=40, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "walikua",
+      "phoneticEn": "walikua",
+      "phoneticSw": "walikua",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=40, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "wacha",
+      "phoneticEn": "wacha",
+      "phoneticSw": "wacha",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=39, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "kenya",
+      "phoneticEn": "kenya",
+      "phoneticSw": "kenya",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=39, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "stenje",
+      "phoneticEn": "stenjeh",
+      "phoneticSw": "stenje",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=39, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "huwa",
+      "phoneticEn": "huwa",
+      "phoneticSw": "huwa",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=38, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "kusota",
+      "phoneticEn": "kusota",
+      "phoneticSw": "kusota",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=37, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "sir",
+      "phoneticEn": "sir",
+      "phoneticSw": "sir",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=37, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "labda",
+      "phoneticEn": "labda",
+      "phoneticSw": "labda",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=37, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "alidai",
+      "phoneticEn": "alidai",
+      "phoneticSw": "alidai",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=37, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "son",
+      "phoneticEn": "son",
+      "phoneticSw": "son",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=36, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "thim",
+      "phoneticEn": "thim",
+      "phoneticSw": "thim",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=36, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "tuna",
+      "phoneticEn": "tuna",
+      "phoneticSw": "tuna",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=35, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "mode",
+      "phoneticEn": "modeh",
+      "phoneticSw": "mode",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=35, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "naenda",
+      "phoneticEn": "naenda",
+      "phoneticSw": "naenda",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=35, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "tenje",
+      "phoneticEn": "tenjeh",
+      "phoneticSw": "tenje",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=35, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "ocpd",
+      "phoneticEn": "ocpd",
+      "phoneticSw": "ocpd",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=35, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "maneighbour",
+      "phoneticEn": "maneighbour",
+      "phoneticSw": "maneighbour",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=35, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "mambang",
+      "phoneticEn": "mambang",
+      "phoneticSw": "mambang",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=35, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "kadi",
+      "phoneticEn": "kadee",
+      "phoneticSw": "kadi",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=35, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "wangu",
+      "phoneticEn": "wangu",
+      "phoneticSw": "wangu",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=34, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "wadhii",
+      "phoneticEn": "wadhii",
+      "phoneticSw": "wadhii",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=34, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "miaka",
+      "phoneticEn": "miaka",
+      "phoneticSw": "miaka",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=33, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "baro",
+      "phoneticEn": "baro",
+      "phoneticSw": "baro",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=33, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "zingine",
+      "phoneticEn": "zingineh",
+      "phoneticSw": "zingine",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=33, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "yule",
+      "phoneticEn": "yuleh",
+      "phoneticSw": "yule",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=33, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "noma",
+      "phoneticEn": "noma",
+      "phoneticSw": "noma",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=32, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "kwani",
+      "phoneticEn": "kwanee",
+      "phoneticSw": "kwani",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=32, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "hakuna",
+      "phoneticEn": "hakuna",
+      "phoneticSw": "hakuna",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=32, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "mutaratara",
+      "phoneticEn": "mutaratara",
+      "phoneticSw": "mutaratara",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=32, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "treatiwa",
+      "phoneticEn": "treatiwa",
+      "phoneticSw": "treatiwa",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=32, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "trans",
+      "phoneticEn": "trans",
+      "phoneticSw": "trans",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=32, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "nzoia",
+      "phoneticEn": "inzoia",
+      "phoneticSw": "nzoia",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=32, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "mjamo",
+      "phoneticEn": "mjamo",
+      "phoneticSw": "mjamo",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=32, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "zime",
+      "phoneticEn": "zimeh",
+      "phoneticSw": "zime",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=31, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "sio",
+      "phoneticEn": "sio",
+      "phoneticSw": "sio",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=31, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "salasa",
+      "phoneticEn": "salasa",
+      "phoneticSw": "salasa",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=31, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "kurape",
+      "phoneticEn": "kurapeh",
+      "phoneticSw": "kurape",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=31, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "wakifika",
+      "phoneticEn": "wakifika",
+      "phoneticSw": "wakifika",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=31, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "fathela",
+      "phoneticEn": "fathela",
+      "phoneticSw": "fathela",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=31, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "anaitwa",
+      "phoneticEn": "anaitwa",
+      "phoneticSw": "anaitwa",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=31, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "mambaru",
+      "phoneticEn": "mambaru",
+      "phoneticSw": "mambaru",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=31, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "hivo",
+      "phoneticEn": "hivo",
+      "phoneticSw": "hivo",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=31, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "msudi",
+      "phoneticEn": "imsudee",
+      "phoneticSw": "msudi",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=31, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "design",
+      "phoneticEn": "design",
+      "phoneticSw": "design",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=30, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "bwaku",
+      "phoneticEn": "bwaku",
+      "phoneticSw": "bwaku",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=30, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "kejani",
+      "phoneticEn": "kejanee",
+      "phoneticSw": "kejani",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=30, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "mdihe",
+      "phoneticEn": "mdiheh",
+      "phoneticSw": "mdihe",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=30, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "una",
+      "phoneticEn": "una",
+      "phoneticSw": "una",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=30, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "chwani",
+      "phoneticEn": "chwanee",
+      "phoneticSw": "chwani",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=30, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "huku",
+      "phoneticEn": "huku",
+      "phoneticSw": "huku",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=30, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "kwake",
+      "phoneticEn": "kwakeh",
+      "phoneticSw": "kwake",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=30, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "nekesa",
+      "phoneticEn": "nekesa",
+      "phoneticSw": "nekesa",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=30, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "chenye",
+      "phoneticEn": "chenyeh",
+      "phoneticSw": "chenye",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=30, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "nime",
+      "phoneticEn": "nimeh",
+      "phoneticSw": "nime",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=29, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "kotiko",
+      "phoneticEn": "kotiko",
+      "phoneticSw": "kotiko",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=29, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "mat",
+      "phoneticEn": "mat",
+      "phoneticSw": "mat",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=29, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "ametry",
+      "phoneticEn": "ametry",
+      "phoneticSw": "ametry",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=29, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "raid",
+      "phoneticEn": "raid",
+      "phoneticSw": "raid",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=29, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "onjivo",
+      "phoneticEn": "onjivo",
+      "phoneticSw": "onjivo",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=29, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "lazima",
+      "phoneticEn": "lazima",
+      "phoneticSw": "lazima",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=28, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "stabbiwa",
+      "phoneticEn": "stabbiwa",
+      "phoneticSw": "stabbiwa",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=28, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "mambanga",
+      "phoneticEn": "mambanga",
+      "phoneticSw": "mambanga",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=28, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "wengine",
+      "phoneticEn": "wengineh",
+      "phoneticSw": "wengine",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=27, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "kesho",
+      "phoneticEn": "kesho",
+      "phoneticSw": "kesho",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=27, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "idhi",
+      "phoneticEn": "idhee",
+      "phoneticSw": "idhi",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=27, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "nade",
+      "phoneticEn": "nadeh",
+      "phoneticSw": "nade",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=27, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "toja",
+      "phoneticEn": "toja",
+      "phoneticSw": "toja",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=26, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "pale",
+      "phoneticEn": "paleh",
+      "phoneticSw": "pale",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=26, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "akona",
+      "phoneticEn": "akona",
+      "phoneticSw": "akona",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=26, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "usiku",
+      "phoneticEn": "usiku",
+      "phoneticSw": "usiku",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=26, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "manyu",
+      "phoneticEn": "manyu",
+      "phoneticSw": "manyu",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=26, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "johnie",
+      "phoneticEn": "johnie",
+      "phoneticSw": "johnie",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=26, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "alienda",
+      "phoneticEn": "alienda",
+      "phoneticSw": "alienda",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=26, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "njifri",
+      "phoneticEn": "injifree",
+      "phoneticSw": "njifri",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=26, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "budaa",
+      "phoneticEn": "budah",
+      "phoneticSw": "budaa",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=26, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "tag",
+      "phoneticEn": "tag",
+      "phoneticSw": "tag",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=26, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "ball",
+      "phoneticEn": "ball",
+      "phoneticSw": "ball",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=25, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "kiasi",
+      "phoneticEn": "kiasee",
+      "phoneticSw": "kiasi",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=25, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "mtush",
+      "phoneticEn": "imtush",
+      "phoneticSw": "mtush",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=25, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "aje",
+      "phoneticEn": "ajeh",
+      "phoneticSw": "aje",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=25, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "gas",
+      "phoneticEn": "gas",
+      "phoneticSw": "gas",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=25, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "ndakas",
+      "phoneticEn": "indakas",
+      "phoneticSw": "ndakas",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=25, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "kibao",
+      "phoneticEn": "kibao",
+      "phoneticSw": "kibao",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=24, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "enda",
+      "phoneticEn": "enda",
+      "phoneticSw": "enda",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=24, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "nani",
+      "phoneticEn": "nanee",
+      "phoneticSw": "nani",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=24, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "maneno",
+      "phoneticEn": "maneno",
+      "phoneticSw": "maneno",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=24, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "njiste",
+      "phoneticEn": "injisteh",
+      "phoneticSw": "njiste",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=24, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "wakiwa",
+      "phoneticEn": "wakiwa",
+      "phoneticSw": "wakiwa",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=24, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "dci",
+      "phoneticEn": "dcee",
+      "phoneticSw": "dci",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=24, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "god",
+      "phoneticEn": "god",
+      "phoneticSw": "god",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=24, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "bana",
+      "phoneticEn": "bana",
+      "phoneticSw": "bana",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=23, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "anapenda",
+      "phoneticEn": "anapenda",
+      "phoneticSw": "anapenda",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=23, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "zako",
+      "phoneticEn": "zako",
+      "phoneticSw": "zako",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=23, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "amekua",
+      "phoneticEn": "amekua",
+      "phoneticSw": "amekua",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=23, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "ting",
+      "phoneticEn": "ting",
+      "phoneticSw": "ting",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=23, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "ada",
+      "phoneticEn": "ada",
+      "phoneticSw": "ada",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=23, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "happen",
+      "phoneticEn": "happen",
+      "phoneticSw": "happen",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=23, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "mdenge",
+      "phoneticEn": "mdengeh",
+      "phoneticSw": "mdenge",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=23, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "akamshow",
+      "phoneticEn": "akamshow",
+      "phoneticSw": "akamshow",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=23, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "ngwendete",
+      "phoneticEn": "ingwendeteh",
+      "phoneticSw": "ngwendete",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=23, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "nita",
+      "phoneticEn": "nita",
+      "phoneticSw": "nita",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=22, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "mbwakni",
+      "phoneticEn": "imbwaknee",
+      "phoneticSw": "mbwakni",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=22, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "ngeus",
+      "phoneticEn": "ingeus",
+      "phoneticSw": "ngeus",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=22, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "onyatto",
+      "phoneticEn": "onyatto",
+      "phoneticSw": "onyatto",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=22, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "chargiwa",
+      "phoneticEn": "chargiwa",
+      "phoneticSw": "chargiwa",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=22, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "vida",
+      "phoneticEn": "vida",
+      "phoneticSw": "vida",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=22, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "mboka",
+      "phoneticEn": "imboka",
+      "phoneticSw": "mboka",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=22, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "code",
+      "phoneticEn": "codeh",
+      "phoneticSw": "code",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=22, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "heaven",
+      "phoneticEn": "heaven",
+      "phoneticSw": "heaven",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=22, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "njo",
+      "phoneticEn": "injo",
+      "phoneticSw": "njo",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=22, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "osiepa",
+      "phoneticEn": "osiepa",
+      "phoneticSw": "osiepa",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=22, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "cha",
+      "phoneticEn": "cha",
+      "phoneticSw": "cha",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=21, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "gari",
+      "phoneticEn": "garee",
+      "phoneticSw": "gari",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=21, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "bila",
+      "phoneticEn": "bila",
+      "phoneticSw": "bila",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=21, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "auntiko",
+      "phoneticEn": "auntiko",
+      "phoneticSw": "auntiko",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=21, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "riang",
+      "phoneticEn": "riang",
+      "phoneticSw": "riang",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=21, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "instead",
+      "phoneticEn": "instead",
+      "phoneticSw": "instead",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=21, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "walimuok",
+      "phoneticEn": "walimuok",
+      "phoneticSw": "walimuok",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=21, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "omera",
+      "phoneticEn": "omera",
+      "phoneticSw": "omera",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=21, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "kamano",
+      "phoneticEn": "kamano",
+      "phoneticSw": "kamano",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=21, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "adwaro",
+      "phoneticEn": "adwaro",
+      "phoneticSw": "adwaro",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=21, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "simo",
+      "phoneticEn": "simo",
+      "phoneticSw": "simo",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=20, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "oti",
+      "phoneticEn": "otee",
+      "phoneticSw": "oti",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=20, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "mary",
+      "phoneticEn": "mary",
+      "phoneticSw": "mary",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=20, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "ingine",
+      "phoneticEn": "ingineh",
+      "phoneticSw": "ingine",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=20, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "msoto",
+      "phoneticEn": "imsoto",
+      "phoneticSw": "msoto",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=20, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "amedunga",
+      "phoneticEn": "amedunga",
+      "phoneticSw": "amedunga",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=20, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "shingo",
+      "phoneticEn": "shingo",
+      "phoneticSw": "shingo",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=20, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "war",
+      "phoneticEn": "war",
+      "phoneticSw": "war",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=20, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "wakidai",
+      "phoneticEn": "wakidai",
+      "phoneticSw": "wakidai",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=20, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "baaden",
+      "phoneticEn": "bahden",
+      "phoneticSw": "baaden",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=20, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "disciples",
+      "phoneticEn": "disciples",
+      "phoneticSw": "disciples",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=20, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "beshte",
+      "phoneticEn": "beshteh",
+      "phoneticSw": "beshte",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=20, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "scene",
+      "phoneticEn": "sceneh",
+      "phoneticSw": "scene",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=19, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "madem",
+      "phoneticEn": "madem",
+      "phoneticSw": "madem",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=19, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "alibambwa",
+      "phoneticEn": "alibambwa",
+      "phoneticSw": "alibambwa",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=19, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "tuko",
+      "phoneticEn": "tuko",
+      "phoneticSw": "tuko",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=19, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "venye",
+      "phoneticEn": "venyeh",
+      "phoneticSw": "venye",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=19, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "job",
+      "phoneticEn": "job",
+      "phoneticSw": "job",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=19, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "anatoka",
+      "phoneticEn": "anatoka",
+      "phoneticSw": "anatoka",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=19, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "cheki",
+      "phoneticEn": "chekee",
+      "phoneticSw": "cheki",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=19, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "kiraka",
+      "phoneticEn": "kiraka",
+      "phoneticSw": "kiraka",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=19, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "macho",
+      "phoneticEn": "macho",
+      "phoneticSw": "macho",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=19, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "bangaiza",
+      "phoneticEn": "bangaiza",
+      "phoneticSw": "bangaiza",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=19, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "jioni",
+      "phoneticEn": "jionee",
+      "phoneticSw": "jioni",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=19, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "mayolo",
+      "phoneticEn": "mayolo",
+      "phoneticSw": "mayolo",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=19, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "moi",
+      "phoneticEn": "moi",
+      "phoneticSw": "moi",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=19, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "kidungi",
+      "phoneticEn": "kidungee",
+      "phoneticSw": "kidungi",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=19, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "centre",
+      "phoneticEn": "centreh",
+      "phoneticSw": "centre",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=19, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "mapero",
+      "phoneticEn": "mapero",
+      "phoneticSw": "mapero",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=19, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "rende",
+      "phoneticEn": "rendeh",
+      "phoneticSw": "rende",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=19, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "kaa",
+      "phoneticEn": "kah",
+      "phoneticSw": "kaa",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=18, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "nare",
+      "phoneticEn": "nareh",
+      "phoneticSw": "nare",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=18, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "sina",
+      "phoneticEn": "sina",
+      "phoneticSw": "sina",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=18, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "zina",
+      "phoneticEn": "zina",
+      "phoneticSw": "zina",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=18, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "nyagu",
+      "phoneticEn": "inyagu",
+      "phoneticSw": "nyagu",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=18, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "ngovo",
+      "phoneticEn": "ingovo",
+      "phoneticSw": "ngovo",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=18, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "brown",
+      "phoneticEn": "brown",
+      "phoneticSw": "brown",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=18, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "madingo",
+      "phoneticEn": "madingo",
+      "phoneticSw": "madingo",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=18, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "teke",
+      "phoneticEn": "tekeh",
+      "phoneticSw": "teke",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=18, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "mocha",
+      "phoneticEn": "mocha",
+      "phoneticSw": "mocha",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=18, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "mboto",
+      "phoneticEn": "imboto",
+      "phoneticSw": "mboto",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=18, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "akamanyuria",
+      "phoneticEn": "akamanyuria",
+      "phoneticSw": "akamanyuria",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=18, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "zabe",
+      "phoneticEn": "zabeh",
+      "phoneticSw": "zabe",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=18, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "fee",
+      "phoneticEn": "fee",
+      "phoneticSw": "fee",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=18, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "akakwara",
+      "phoneticEn": "akakwara",
+      "phoneticSw": "akakwara",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=18, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "trend",
+      "phoneticEn": "trend",
+      "phoneticSw": "trend",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=18, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "otieno",
+      "phoneticEn": "otieno",
+      "phoneticSw": "otieno",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=18, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "arrest",
+      "phoneticEn": "arrest",
+      "phoneticSw": "arrest",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=18, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "beating",
+      "phoneticEn": "beating",
+      "phoneticSw": "beating",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=18, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "mita",
+      "phoneticEn": "mita",
+      "phoneticSw": "mita",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=18, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "godi",
+      "phoneticEn": "godee",
+      "phoneticSw": "godi",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=18, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "mait",
+      "phoneticEn": "mait",
+      "phoneticSw": "mait",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=18, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "zili",
+      "phoneticEn": "zilee",
+      "phoneticSw": "zili",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=17, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "zangu",
+      "phoneticEn": "zangu",
+      "phoneticSw": "zangu",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=17, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "ngware",
+      "phoneticEn": "ingwareh",
+      "phoneticSw": "ngware",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=17, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "mbili",
+      "phoneticEn": "imbilee",
+      "phoneticSw": "mbili",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=17, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "nina",
+      "phoneticEn": "nina",
+      "phoneticSw": "nina",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=17, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "law",
+      "phoneticEn": "law",
+      "phoneticSw": "law",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=17, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "stadi",
+      "phoneticEn": "stadee",
+      "phoneticSw": "stadi",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=17, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "mambo",
+      "phoneticEn": "mambo",
+      "phoneticSw": "mambo",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=17, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "watoi",
+      "phoneticEn": "watoi",
+      "phoneticSw": "watoi",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=17, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "ebu",
+      "phoneticEn": "ebu",
+      "phoneticSw": "ebu",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=17, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "kesi",
+      "phoneticEn": "kesee",
+      "phoneticSw": "kesi",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=17, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "yaani",
+      "phoneticEn": "yahnee",
+      "phoneticSw": "yaani",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=17, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "uni",
+      "phoneticEn": "unee",
+      "phoneticSw": "uni",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=17, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "mbeteka",
+      "phoneticEn": "imbeteka",
+      "phoneticSw": "mbeteka",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=17, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "sacco",
+      "phoneticEn": "sacco",
+      "phoneticSw": "sacco",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=17, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "ziko",
+      "phoneticEn": "ziko",
+      "phoneticSw": "ziko",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=17, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "jaba",
+      "phoneticEn": "jaba",
+      "phoneticSw": "jaba",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=17, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "ameganda",
+      "phoneticEn": "ameganda",
+      "phoneticSw": "ameganda",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=17, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "amesanya",
+      "phoneticEn": "amesanya",
+      "phoneticSw": "amesanya",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=17, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "robert",
+      "phoneticEn": "robert",
+      "phoneticSw": "robert",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=17, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "washaanza",
+      "phoneticEn": "washahnza",
+      "phoneticSw": "washaanza",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=17, sources: think-ke+BlakHasan"
+    },
+    {
+      "term": "oyole",
+      "phoneticEn": "oyoleh",
+      "phoneticSw": "oyole",
+      "tags": [
+        "auto-extracted"
+      ],
+      "notes": "freq=17, sources: think-ke+BlakHasan"
     }
   ],
   "prefixes": [

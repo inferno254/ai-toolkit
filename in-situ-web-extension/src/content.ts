@@ -6,7 +6,7 @@
  * - Integrates with profile switch states
  */
 
-import { ShengPhoneticEngine, TTSTargetMode } from '../../sheng-core-engine/src/index';
+import { ShengPhoneticEngine, TTSTargetMode } from '../../sheng-core-engine/dist/index.js';
 
 class ShengDOMAdapter {
   private engine: ShengPhoneticEngine;

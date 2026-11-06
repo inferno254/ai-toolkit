@@ -3,7 +3,7 @@
  * Handles API calls, settings synchronization, and toolkit integration.
  */
 
-import { ShengPhoneticEngine, TTSTargetMode } from '../../sheng-core-engine/src/index';
+import { ShengPhoneticEngine, TTSTargetMode } from '../../sheng-core-engine/dist/index.js';
 
 let engine = new ShengPhoneticEngine();
 
