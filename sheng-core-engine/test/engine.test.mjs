@@ -8,12 +8,18 @@
  * 5. Full sentence code-switching smoothing
  */
 
-const assert = require('assert');
-const { ShengPhoneticEngine } = require('../dist/index.js');
+import assert from 'node:assert/strict';
+import { ShengPhoneticEngine } from '../dist/index.js';
+import lexiconData from '../src/sheng-lexicon.json' with { type: 'json' };
 
 async function runTestSuite() {
   console.log('🧪 Starting Sheng Phonetic Core Engine Test Suite...\n');
   const engine = new ShengPhoneticEngine({ enableAiFallback: false });
+
+  console.log('Test 0: Lexicon integrity');
+  const terms = lexiconData.lexicon.map((entry) => entry.term);
+  assert.strictEqual(new Set(terms).size, terms.length, 'Lexicon terms must be unique');
+  console.log(`  ✓ ${terms.length} unique entries`);
 
   // Test 1: Single Word Lookups
   console.log('Test 1: Single Word Fast-Path Replacements');
@@ -22,7 +28,14 @@ async function runTestSuite() {
     { in: 'mbogi', expected: 'm-bow-ghee' },
     { in: 'chapaa', expected: 'chah-pah' },
     { in: 'bazenga', expected: 'bah-zeng-gah' },
-    { in: 'buda', expected: 'boo-dah' }
+    { in: 'buda', expected: 'boo-dah' },
+    { in: 'msupa', expected: 'im-soo-pah' },
+    { in: 'mdosi', expected: 'im-doh-see' },
+    { in: 'dunda', expected: 'doon-dah' },
+    { in: 'kudunda', expected: 'koo-doon-dah' },
+    { in: 'mzinga', expected: 'im-zee-ngah' },
+    { in: 'kanairo', expected: 'kah-nai-ro' },
+    { in: 'mreki', expected: 'im-reh-kee' }
   ];
 
   for (const t of wordTests) {
@@ -80,4 +93,3 @@ runTestSuite().catch((err) => {
   console.error('❌ Test suite failed:', err);
   process.exit(1);
 });
-

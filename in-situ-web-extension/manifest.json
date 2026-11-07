@@ -5,21 +5,24 @@
   "description": "Smooths Sheng and Kenyan code-switching phonetics for TalkBack and screen readers while preserving visual layout.",
   "permissions": [
     "storage",
-    "activeTab"
+    "activeTab",
+    "tabs"
+  ],
+  "host_permissions": [
+    "https://generativelanguage.googleapis.com/*"
   ],
   "action": {
-    "default_popup": "public/popup.html",
+    "default_popup": "popup.html",
     "default_title": "Sheng Mode Settings"
   },
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["dist/content.js"],
+      "js": ["content.js"],
       "run_at": "document_idle"
     }
   ],
   "background": {
-    "service_worker": "dist/background.js"
+    "service_worker": "background.js"
   }
 }
-

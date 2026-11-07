@@ -8,10 +8,10 @@
  * 5. Deterministic Non-AI First rule
  */
 
-import lexiconData from './sheng-lexicon.json';
-import { LanguageIdentifier } from './language-identifier';
-import { ShengLexiconCache, TTSTargetMode } from './sheng-lexicon-cache';
-import { GeminiPhoneticAdapter } from './gemini-adapter';
+import lexiconData from './sheng-lexicon.json' with { type: 'json' };
+import { LanguageIdentifier } from './language-identifier.js';
+import { ShengLexiconCache, TTSTargetMode } from './sheng-lexicon-cache.js';
+import { GeminiPhoneticAdapter } from './gemini-adapter.js';
 
 export interface PhoneticEngineOptions {
   geminiApiKey?: string;
@@ -121,8 +121,7 @@ export class ShengPhoneticEngine {
   }
 }
 
-export * from './language-identifier';
-export * from './morphological-root-parser';
-export * from './sheng-lexicon-cache';
-export * from './gemini-adapter';
-
+export * from './language-identifier.js';
+export * from './morphological-root-parser.js';
+export * from './sheng-lexicon-cache.js';
+export * from './gemini-adapter.js';

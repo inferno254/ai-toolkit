@@ -8,6 +8,8 @@
     "preview": "vite preview --host 0.0.0.0 --port 3000"
   },
   "dependencies": {
+    "@ai4a11y/toolkit": "file:../AI-for-Accessibility-Toolkit/toolkit",
+    "@ai4a11y/tools": "file:../AI-for-Accessibility-Toolkit/tools",
     "sheng-core-engine": "file:../sheng-core-engine"
   },
   "devDependencies": {
@@ -15,4 +17,3 @@
     "vite": "^5.2.0"
   }
 }
-

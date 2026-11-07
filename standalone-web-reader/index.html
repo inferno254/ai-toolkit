@@ -1,343 +1,785 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sheng Mode Screen Reader — Standalone Paste & Read</title>
-  <style>
-    :root {
-      --bg-color: #0f172a;
-      --card-bg: #1e293b;
-      --text-main: #f8fafc;
-      --text-muted: #94a3b8;
-      --primary: #38bdf8;
-      --primary-hover: #0284c7;
-      --accent: #f59e0b;
-      --success: #22c55e;
-      --border: #334155;
-      --focus-ring: #60a5fa;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      background-color: var(--bg-color);
-      color: var(--text-main);
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      line-height: 1.6;
-      padding: 24px 16px;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    header {
-      width: 100%;
-      max-width: 860px;
-      margin-bottom: 24px;
-      border-bottom: 2px solid var(--border);
-      padding-bottom: 16px;
-    }
-
-    h1 {
-      font-size: 1.8rem;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .badge {
-      font-size: 0.75rem;
-      background: var(--primary);
-      color: #000;
-      font-weight: bold;
-      padding: 4px 8px;
-      border-radius: 9999px;
-      text-transform: uppercase;
-    }
-
-    .subtitle {
-      color: var(--text-muted);
-      font-size: 0.95rem;
-      margin-top: 6px;
-    }
-
-    main {
-      width: 100%;
-      max-width: 860px;
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-
-    .card {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 20px;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
-    }
-
-    .card h2 {
-      font-size: 1.2rem;
-      margin-bottom: 12px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    label {
-      display: block;
-      font-weight: 600;
-      margin-bottom: 8px;
-    }
-
-    textarea {
-      width: 100%;
-      min-height: 120px;
-      padding: 12px;
-      background: #090d16;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      color: var(--text-main);
-      font-size: 1rem;
-      font-family: inherit;
-      resize: vertical;
-    }
-
-    textarea:focus, select:focus, input:focus, button:focus {
-      outline: 3px solid var(--focus-ring);
-      outline-offset: 2px;
-    }
-
-    .preset-container {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 10px;
-    }
-
-    .preset-btn {
-      background: #334155;
-      color: var(--text-main);
-      border: none;
-      padding: 6px 12px;
-      border-radius: 6px;
-      font-size: 0.85rem;
-      cursor: pointer;
-    }
-
-    .preset-btn:hover {
-      background: #475569;
-    }
-
-    .controls-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 16px;
-      margin-top: 12px;
-    }
-
-    select, input[type="text"], input[type="password"] {
-      width: 100%;
-      padding: 10px;
-      background: #090d16;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      color: var(--text-main);
-      font-size: 0.95rem;
-    }
-
-    .action-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 16px;
-    }
-
-    .btn {
-      padding: 12px 24px;
-      border: none;
-      border-radius: 8px;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      transition: background 0.15s ease;
-    }
-
-    .btn-primary {
-      background: var(--primary);
-      color: #020817;
-    }
-
-    .btn-primary:hover {
-      background: var(--primary-hover);
-      color: #fff;
-    }
-
-    .btn-secondary {
-      background: #334155;
-      color: var(--text-main);
-    }
-
-    .btn-secondary:hover {
-      background: #475569;
-    }
-
-    .btn-accent {
-      background: var(--accent);
-      color: #000;
-    }
-
-    .output-container {
-      margin-top: 16px;
-    }
-
-    .comparison-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-      margin-top: 12px;
-    }
-
-    @media (max-width: 640px) {
-      .comparison-grid {
-        grid-template-columns: 1fr;
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Prepare English, Kiswahili and Sheng text for visual reading, screen-reader navigation and browser speech preview."
+    />
+    <title>Sheng Mode — Reader Studio</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --paper: #f3efe5;
+        --sheet: #fffdf8;
+        --ink: #18262d;
+        --muted: #46545d;
+        --line: #c9c4b8;
+        --line-strong: #8d9694;
+        --blue: #1747c8;
+        --blue-dark: #1039a9;
+        --blue-wash: #eaf0ff;
+        --red: #a93625;
+        --red-dark: #87291c;
+        --red-wash: #faeee9;
+        --green: #17613c;
+        --shadow: 0 12px 32px rgb(34 39 40 / 8%);
+        --focus: #0645d8;
+        --toolkit-text-scale: 1;
+        font-family:
+          "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+        color: var(--ink);
+        background: var(--paper);
       }
-    }
 
-    .pane {
-      background: #090d16;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 16px;
-    }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
 
-    .pane-title {
-      font-size: 0.85rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      margin-bottom: 8px;
-      color: var(--text-muted);
-    }
+      body {
+        min-width: 320px;
+        min-height: 100vh;
+        margin: 0;
+        padding: clamp(20px, 5vw, 58px) 20px 48px;
+        background-color: var(--paper);
+        background-image:
+          linear-gradient(rgb(37 52 61 / 3%) 1px, transparent 1px),
+          linear-gradient(90deg, rgb(37 52 61 / 3%) 1px, transparent 1px);
+        background-size: 32px 32px;
+        line-height: 1.55;
+      }
 
-    .pane-content {
-      font-size: 1.1rem;
-      line-height: 1.7;
-    }
+      button,
+      input,
+      select,
+      textarea {
+        font: inherit;
+      }
 
-    .stats-badge {
-      display: inline-block;
-      font-size: 0.8rem;
-      padding: 3px 8px;
-      background: #14532d;
-      color: #4ade80;
-      border-radius: 4px;
-      margin-top: 8px;
-    }
+      button {
+        color: inherit;
+      }
 
-    .live-region-notice {
-      margin-top: 12px;
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      border-left: 3px solid var(--primary);
-      padding-left: 10px;
-    }
-  </style>
-</head>
-<body>
-  <header>
-    <h1>
-      Sheng Mode Standalone Reader
-      <span class="badge">TalkBack Ready</span>
-    </h1>
-    <p class="subtitle">
-      Zero semantic translation. Pure phonetic smoothing for natural TalkBack voice playback.
-    </p>
-  </header>
+      .site-header,
+      main,
+      .site-footer {
+        width: min(100%, 1060px);
+        margin-inline: auto;
+      }
 
-  <main>
-    <section class="card" aria-labelledby="input-heading">
-      <h2 id="input-heading">1. Input Local Kenyan Content</h2>
+      .site-header {
+        position: relative;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        align-items: end;
+        gap: 20px;
+        margin-bottom: 28px;
+        padding: 4px 0 22px 18px;
+        border-bottom: 1px solid var(--line);
+      }
 
-      <label for="snippet-input">Paste or type text containing English, Kiswahili, or Sheng code-switching:</label>
-      <textarea id="snippet-input" placeholder="e.g. Leo tuko rada ya mathree kwa stage ya mtaani, mbogi mzima iko form ya sherehe..."></textarea>
+      .site-header::before {
+        position: absolute;
+        inset: 3px auto 22px 0;
+        width: 5px;
+        background: var(--blue);
+        content: "";
+      }
 
+      .eyebrow,
+      .section-kicker,
+      .pane-title {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.75rem;
+        font-weight: 800;
+        letter-spacing: 0.11em;
+        line-height: 1.35;
+        text-transform: uppercase;
+      }
+
+      .eyebrow {
+        margin-bottom: 7px;
+      }
+
+      h1,
+      h2,
+      h3,
+      p {
+        margin-top: 0;
+      }
+
+      h1 {
+        max-width: 750px;
+        margin-bottom: 0;
+        font-size: clamp(2.15rem, 5.2vw, 3.8rem);
+        font-weight: 820;
+        letter-spacing: -0.065em;
+        line-height: 0.99;
+      }
+
+      .title-accent {
+        color: var(--blue);
+      }
+
+      .subtitle {
+        max-width: 680px;
+        margin: 13px 0 0;
+        color: var(--muted);
+        font-size: 1.02rem;
+        line-height: 1.55;
+      }
+
+      .sound-mark {
+        display: flex;
+        width: 108px;
+        height: 74px;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        border: 1px solid var(--line);
+        background: var(--sheet);
+      }
+
+      .sound-mark span {
+        width: 4px;
+        border-radius: 2px;
+        background: var(--red);
+      }
+
+      .sound-mark span:nth-child(1),
+      .sound-mark span:nth-child(9) {
+        height: 13px;
+      }
+
+      .sound-mark span:nth-child(2),
+      .sound-mark span:nth-child(8) {
+        height: 24px;
+      }
+
+      .sound-mark span:nth-child(3),
+      .sound-mark span:nth-child(7) {
+        height: 38px;
+      }
+
+      .sound-mark span:nth-child(4),
+      .sound-mark span:nth-child(6) {
+        height: 50px;
+      }
+
+      .sound-mark span:nth-child(5) {
+        height: 58px;
+        background: var(--blue);
+      }
+
+      main {
+        display: grid;
+        gap: 18px;
+      }
+
+      .card {
+        min-width: 0;
+        padding: clamp(20px, 3.5vw, 34px);
+        border: 1px solid var(--line);
+        background: var(--sheet);
+        box-shadow: var(--shadow);
+      }
+
+      .input-card {
+        border-top: 5px solid var(--blue);
+        padding-top: clamp(20px, 3vw, 30px);
+      }
+
+      .toolkit-card {
+        background: #f9f7f0;
+      }
+
+      .section-heading {
+        display: flex;
+        align-items: baseline;
+        gap: 12px;
+        margin-bottom: 20px;
+      }
+
+      .section-number {
+        flex: 0 0 auto;
+        color: var(--blue);
+        font-size: 1.15rem;
+        font-weight: 850;
+        font-variant-numeric: tabular-nums;
+        letter-spacing: -0.04em;
+      }
+
+      h2 {
+        margin-bottom: 0;
+        font-size: clamp(1.3rem, 2.4vw, 1.65rem);
+        font-weight: 780;
+        letter-spacing: -0.035em;
+        line-height: 1.2;
+      }
+
+      h3 {
+        margin-bottom: 9px;
+        font-size: 1.05rem;
+        font-weight: 760;
+        letter-spacing: -0.015em;
+        line-height: 1.35;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 7px;
+        font-size: 0.95rem;
+        font-weight: 700;
+        line-height: 1.4;
+      }
+
+      .field-help,
+      .preference-note {
+        margin: 8px 0 0;
+        color: var(--muted);
+        font-size: 0.9rem;
+        line-height: 1.55;
+      }
+
+      textarea,
+      select,
+      input[type="text"],
+      input[type="password"] {
+        width: 100%;
+        border: 1px solid var(--line-strong);
+        border-radius: 3px;
+        background: #fffefa;
+        color: var(--ink);
+      }
+
+      textarea {
+        min-height: 156px;
+        padding: 14px 15px;
+        font-size: 1rem;
+        line-height: 1.65;
+        resize: vertical;
+      }
+
+      textarea::placeholder,
+      input::placeholder {
+        color: #56636b;
+        opacity: 1;
+      }
+
+      select,
+      input[type="text"],
+      input[type="password"] {
+        min-height: 48px;
+        padding: 10px 12px;
+      }
+
+      :focus-visible {
+        outline: 3px solid var(--focus);
+        outline-offset: 3px;
+      }
+
+      .preset-group {
+        margin-top: 18px;
+      }
+
+      .preset-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .preset-btn {
+        min-height: 44px;
+        padding: 8px 12px;
+        border: 1px solid var(--line-strong);
+        border-radius: 3px;
+        background: #f4f1e8;
+        color: var(--ink);
+        font-size: 0.88rem;
+        font-weight: 700;
+        cursor: pointer;
+      }
+
+      .preset-btn:hover {
+        border-color: var(--blue);
+        background: var(--blue-wash);
+      }
+
+      .controls-grid,
+      .preference-controls {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 235px), 1fr));
+        gap: 20px;
+        margin-top: 22px;
+      }
+
+      .controls-grid > div,
+      .preference-controls > div {
+        min-width: 0;
+      }
+
+      .privacy-note {
+        margin-top: 9px;
+        padding: 9px 11px;
+        border-left: 3px solid var(--red);
+        background: var(--red-wash);
+        color: #4f2b25;
+        font-size: 0.88rem;
+        line-height: 1.5;
+      }
+
+      input[type="range"] {
+        display: block;
+        width: 100%;
+        min-height: 44px;
+        margin: 0;
+        accent-color: var(--blue);
+        cursor: pointer;
+        touch-action: manipulation;
+      }
+
+      output {
+        display: inline-block;
+        min-width: 3.5em;
+        margin-top: 2px;
+        padding: 2px 8px;
+        border: 1px solid var(--line);
+        background: #f4f1e8;
+        color: var(--ink);
+        font-weight: 750;
+        font-variant-numeric: tabular-nums;
+      }
+
+      .action-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 23px;
+        padding-top: 18px;
+        border-top: 1px solid #ded9ce;
+      }
+
+      .btn {
+        display: inline-flex;
+        min-height: 48px;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 11px 16px;
+        border: 2px solid transparent;
+        border-radius: 3px;
+        font-weight: 750;
+        line-height: 1.25;
+        text-align: center;
+        cursor: pointer;
+        transition:
+          background-color 140ms ease,
+          border-color 140ms ease,
+          transform 140ms ease;
+      }
+
+      .btn:active:not(:disabled) {
+        transform: translateY(1px);
+      }
+
+      .btn-primary {
+        background: var(--blue);
+        color: #fff;
+      }
+
+      .btn-primary:hover:not(:disabled) {
+        background: var(--blue-dark);
+      }
+
+      .btn-secondary {
+        border-color: #7d8788;
+        background: #f4f1e8;
+        color: var(--ink);
+      }
+
+      .btn-secondary:hover:not(:disabled) {
+        border-color: var(--ink);
+        background: #e8e4da;
+      }
+
+      .btn-accent {
+        background: var(--red);
+        color: #fff;
+      }
+
+      .btn-accent:hover:not(:disabled) {
+        background: var(--red-dark);
+      }
+
+      .btn:disabled {
+        border-color: #adb2af;
+        background: #e1dfd8;
+        color: #505b60;
+        cursor: not-allowed;
+      }
+
+      .toggle-row {
+        display: flex;
+        min-height: 52px;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 11px 13px;
+        border: 1px solid var(--line);
+        background: var(--sheet);
+      }
+
+      .toggle-row label {
+        margin: 0;
+        cursor: pointer;
+      }
+
+      input[type="checkbox"] {
+        width: 44px;
+        height: 44px;
+        min-width: 44px;
+        min-height: 44px;
+        flex: 0 0 auto;
+        margin: 0;
+        accent-color: var(--blue);
+        cursor: pointer;
+      }
+
+      .preference-controls {
+        margin-block: 20px;
+      }
+
+      .toolkit-card .btn {
+        margin-top: 16px;
+      }
+
+      .toolkit-card h3 {
+        margin-top: 25px;
+      }
+
+      .adapter-list,
+      .skill-steps {
+        margin: 8px 0 0 1.4rem;
+        padding: 0;
+        color: var(--muted);
+        line-height: 1.65;
+        overflow-wrap: anywhere;
+      }
+
+      #reading-aid-result {
+        overflow-wrap: anywhere;
+      }
+
+      .comparison-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+        margin-top: 16px;
+      }
+
+      .pane {
+        min-width: 0;
+        min-height: 160px;
+        padding: 18px;
+        border: 1px solid #aeb4ae;
+        background: #f8f5ed;
+      }
+
+      .pane:last-child {
+        border-color: var(--red);
+        background: var(--red-wash);
+      }
+
+      .pane-title {
+        display: block;
+        margin-bottom: 12px;
+        color: #34444f;
+        font-size: 0.76rem;
+      }
+
+      .pane-content {
+        min-height: 2em;
+        color: var(--ink);
+        font-size: calc(1.12rem * var(--toolkit-text-scale, 1));
+        line-height: var(--toolkit-line-height, 1.75);
+        overflow-wrap: anywhere;
+      }
+
+      #snippet-input,
+      #visual-output,
+      #phonetic-output {
+        font-size: calc(1rem * var(--toolkit-text-scale, 1));
+      }
+
+      #visual-output,
+      #phonetic-output {
+        line-height: var(--toolkit-line-height, 1.75);
+      }
+
+      #stats-container {
+        margin-top: 14px;
+        overflow-wrap: anywhere;
+      }
+
+      .stats-badge {
+        display: inline-block;
+        margin: 0 7px 7px 0;
+        padding: 5px 9px;
+        border: 1px solid #aeb4ae;
+        background: #f4f1e8;
+        color: var(--ink);
+        font-size: 0.84rem;
+        font-weight: 700;
+        line-height: 1.45;
+      }
+
+      .stats-badge:first-child {
+        border-color: #73a185;
+        background: #e8f4eb;
+        color: #17452e;
+      }
+
+      .live-region-notice {
+        margin: 14px 0 0;
+        padding: 10px 13px;
+        border-left: 4px solid var(--blue);
+        background: #eef2fa;
+        color: #263b4a;
+        font-size: 0.92rem;
+        line-height: 1.55;
+      }
+
+      #reader-status:empty,
+      #toolkit-status:empty {
+        margin: 0;
+        padding-block: 0;
+        border-left-width: 0;
+        background: transparent;
+      }
+
+      .site-footer {
+        margin-top: 18px;
+        padding: 14px 0 0;
+        border-top: 1px solid var(--line);
+        color: var(--muted);
+        font-size: 0.88rem;
+        line-height: 1.55;
+      }
+
+      @media (max-width: 680px) {
+        body {
+          padding: 22px 14px 32px;
+          background-size: 24px 24px;
+        }
+
+        .site-header {
+          grid-template-columns: minmax(0, 1fr);
+          gap: 14px;
+          margin-bottom: 18px;
+          padding-bottom: 17px;
+        }
+
+        .sound-mark {
+          display: none;
+        }
+
+        .card {
+          padding: 20px 16px;
+        }
+
+        .input-card {
+          padding-top: 17px;
+        }
+
+        .action-row {
+          display: grid;
+          grid-template-columns: 1fr;
+        }
+
+        .action-row .btn {
+          width: 100%;
+        }
+
+        .comparison-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .pane {
+          min-height: 130px;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          scroll-behavior: auto !important;
+          transition-duration: 0.01ms !important;
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
       <div>
-        <label>Quick Presets:</label>
-        <div class="preset-container">
-          <button type="button" class="preset-btn" data-preset="Leo tuko rada ya mathree kwa stage ya mtaani, mbogi mzima iko form ya sherehe.">Preset 1: Matatu & Party</button>
-          <button type="button" class="preset-btn" data-preset="Buda usipanic, chapaa imelipwa na morio wa gava tayari bila ngori.">Preset 2: Police & Money</button>
-          <button type="button" class="preset-btn" data-preset="Wasee wote wameshika luku fiti, wanadhokoma kuelekea CBD bila noma.">Preset 3: Clothes & Walking</button>
-          <button type="button" class="preset-btn" data-preset="Niaje maze, keja iko poa lakini mullah imekatika kuruka.">Preset 4: House & Broke</button>
-        </div>
+        <p class="eyebrow">Sheng Mode · Field notes 01</p>
+        <h1>Words in motion.<br /><span class="title-accent">Meaning in focus.</span></h1>
+        <p class="subtitle">
+          Keep the original in view, then prepare a phonetic version for screen-reader navigation or a separate browser speech preview.
+        </p>
       </div>
-
-      <div class="controls-grid">
-        <div>
-          <label for="tts-voice-select">Screen Reader Voice Target</label>
-          <select id="tts-voice-select">
-            <option value="en" selected>English Engine (Google TTS en-US/UK)</option>
-            <option value="sw">Kiswahili Engine (Standard Swahili)</option>
-          </select>
-        </div>
-        <div>
-          <label for="api-key-input">Gemini API Key (Optional Polish)</label>
-          <input type="password" id="api-key-input" placeholder="Optional for ambiguous estate slang">
-        </div>
+      <div class="sound-mark" aria-hidden="true">
+        <span></span><span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span>
       </div>
+    </header>
 
-      <div class="action-row">
-        <button id="process-btn" class="btn btn-primary" aria-label="Process and smooth phonetics">
-          ⚡ Smooth Phonetics
-        </button>
-        <button id="play-original-btn" class="btn btn-secondary" aria-label="Listen to unadapted text audio">
-          🔊 Hear Unsmoothed (Original)
-        </button>
-        <button id="play-adapted-btn" class="btn btn-accent" aria-label="Listen to smoothed TalkBack phonetics audio">
-          ✨ Hear Smoothed (TalkBack Mode)
-        </button>
-      </div>
-    </section>
+    <main>
+      <section class="card input-card" aria-labelledby="input-heading">
+        <div class="section-heading">
+          <span class="section-number" aria-hidden="true">01</span>
+          <h2 id="input-heading">Bring your text</h2>
+        </div>
 
-    <section class="card" aria-labelledby="output-heading">
-      <h2 id="output-heading">2. TalkBack Accessibility Surface</h2>
+        <label for="snippet-input">Paste or type English, Kiswahili, or Sheng code-switching:</label>
+        <textarea
+          id="snippet-input"
+          placeholder="e.g. Leo tuko rada ya mathree kwa stage ya mtaani, mbogi mzima iko form ya sherehe..."
+        ></textarea>
 
-      <div class="comparison-grid">
-        <div class="pane">
-          <div class="pane-title">Visual Text (Original Authenticity)</div>
-          <div id="visual-output" class="pane-content" tabindex="0">
-            [No text processed yet]
+        <div class="preset-group">
+          <p class="section-kicker">Try a field sample</p>
+          <div class="preset-container">
+            <button type="button" class="preset-btn" data-preset="Leo tuko rada ya mathree kwa stage ya mtaani, mbogi mzima iko form ya sherehe.">Preset 1: Matatu &amp; Party</button>
+            <button type="button" class="preset-btn" data-preset="Buda usipanic, chapaa imelipwa na morio wa gava tayari bila ngori.">Preset 2: Police &amp; Money</button>
+            <button type="button" class="preset-btn" data-preset="Wasee wote wameshika luku fiti, wanadhokoma kuelekea CBD bila noma.">Preset 3: Clothes &amp; Walking</button>
+            <button type="button" class="preset-btn" data-preset="Niaje maze, keja iko poa lakini mullah imekatika kuruka.">Preset 4: House &amp; Broke</button>
           </div>
         </div>
 
-        <div class="pane">
-          <div class="pane-title">TalkBack Phonetic Stream (What Voice Reads)</div>
-          <div id="phonetic-output" class="pane-content" tabindex="0" aria-live="polite">
-            [No text processed yet]
+        <div class="controls-grid">
+          <div>
+            <label for="tts-voice-select">Pronunciation and demo voice</label>
+            <select id="tts-voice-select">
+              <option value="en" selected>English-oriented pronunciation</option>
+              <option value="sw">Kiswahili-oriented pronunciation</option>
+            </select>
+          </div>
+          <div>
+            <label for="api-key-input">Gemini API key (optional fallback)</label>
+            <input
+              type="password"
+              id="api-key-input"
+              autocomplete="off"
+              placeholder="Optional for unresolved slang"
+            />
+            <p class="privacy-note">
+              Local Toolkit preferences and skills stay on this device. Separately, if a Gemini key is configured and the optional fallback is used, unresolved entered text may be sent to Google.
+            </p>
+          </div>
+          <div>
+            <label for="speech-rate">Browser speech preview speed</label>
+            <input id="speech-rate" type="range" min="0.7" max="1.3" step="0.1" value="0.9" />
+            <output id="speech-rate-value" for="speech-rate">0.9×</output>
+            <p class="field-help">For the Hear buttons only. TalkBack speech speed is controlled separately in Android accessibility settings.</p>
           </div>
         </div>
-      </div>
 
-      <div id="stats-container"></div>
+        <div class="action-row" aria-label="Text processing and browser speech controls">
+          <button id="process-btn" class="btn btn-primary" aria-label="Process and smooth phonetics">
+            ⚡ Smooth Phonetics
+          </button>
+          <button id="play-original-btn" class="btn btn-secondary" aria-label="Listen to unadapted text audio">
+            🔊 Hear Original
+          </button>
+          <button id="play-adapted-btn" class="btn btn-accent" aria-label="Listen to smoothed phonetics using browser speech">
+            ✨ Hear Smoothed · Browser Preview
+          </button>
+          <button id="pause-resume-btn" class="btn btn-secondary" aria-label="Pause speech playback" disabled>
+            Pause
+          </button>
+          <button id="stop-playback-btn" class="btn btn-secondary" aria-label="Stop speech playback" disabled>
+            Stop
+          </button>
+        </div>
+      </section>
 
-      <div class="live-region-notice" role="note">
-        <strong>TalkBack Note:</strong> The right panel is linked to an <code>aria-live="polite"</code> region. Swiping or navigating via TalkBack will immediately vocalize the smoothed syllabic syllables.
-      </div>
-    </section>
-  </main>
+      <section class="card output-card" aria-labelledby="output-heading">
+        <div class="section-heading">
+          <span class="section-number" aria-hidden="true">02</span>
+          <h2 id="output-heading">Compare the reading</h2>
+        </div>
 
-  <script type="module" src="/src/main.ts"></script>
-</body>
+        <div class="comparison-grid">
+          <section class="pane" aria-labelledby="visual-pane-title">
+            <h3 class="pane-title" id="visual-pane-title">Original text · visual reference</h3>
+            <div id="visual-output" class="pane-content" tabindex="0">
+              [No text processed yet]
+            </div>
+          </section>
+          <section class="pane" aria-labelledby="phonetic-pane-title">
+            <h3 class="pane-title" id="phonetic-pane-title">Phonetic text · navigate with your screen reader</h3>
+            <div id="phonetic-output" class="pane-content" tabindex="0">
+              [No text processed yet]
+            </div>
+          </section>
+        </div>
+
+        <div id="stats-container"></div>
+        <p id="reader-status" class="live-region-notice" role="status" aria-live="polite"></p>
+        <p class="live-region-notice" role="note">
+          <strong>Reading note:</strong> The phonetic result is not announced as a whole. Move focus to it to navigate with your screen reader. Hear buttons use browser speech as a separate preview; no TalkBack device validation is implied.
+        </p>
+      </section>
+
+      <section class="card toolkit-card" aria-labelledby="preferences-heading">
+        <div class="section-heading">
+          <span class="section-number" aria-hidden="true">03</span>
+          <h2 id="preferences-heading">Toolkit preferences</h2>
+        </div>
+        <p class="preference-note">
+          Toolkit preferences and the bundled reading aid are stored and resolved locally on this device. The optional Gemini fallback is separate: only when configured and used may unresolved entered text be sent to Google.
+        </p>
+        <div class="toggle-row">
+          <label for="low-vision-profile">Use optional Low Vision profile</label>
+          <input type="checkbox" id="low-vision-profile" />
+        </div>
+        <div class="preference-controls">
+          <div>
+            <label for="toolkit-text-size">Text size</label>
+            <input id="toolkit-text-size" type="range" min="0.8" max="2" step="0.1" value="1" />
+            <output id="toolkit-text-size-value" for="toolkit-text-size">100%</output>
+          </div>
+          <div>
+            <label for="toolkit-read-rate">Browser read-aloud rate</label>
+            <input id="toolkit-read-rate" type="range" min="0.7" max="1.3" step="0.1" value="0.9" />
+            <output id="toolkit-read-rate-value" for="toolkit-read-rate">0.9×</output>
+          </div>
+        </div>
+        <button type="button" class="btn btn-secondary" id="save-toolkit-preferences">Save local preferences</button>
+        <p id="toolkit-status" class="live-region-notice" role="status" aria-live="polite"></p>
+
+        <h3>Low Vision profile adapters</h3>
+        <p class="preference-note">Catalog entries are not automatically enabled. This reader applies text size and its browser speech rate only.</p>
+        <ul id="toolkit-adapters" class="adapter-list"></ul>
+
+        <h3>Reading aid skill for this reader page</h3>
+        <div id="reading-aid-result" class="preference-note">Checking the bundled skill locally…</div>
+        <ol id="reading-aid-steps" class="skill-steps"></ol>
+        <button type="button" class="btn btn-secondary" id="apply-reading-aid" disabled>Apply supported reading-aid setting</button>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      Original wording remains visible alongside the phonetic rendering. Browser speech is a preview and does not replace your device’s screen reader.
+    </footer>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
 </html>
-

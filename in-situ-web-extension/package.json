@@ -7,6 +7,8 @@
     "watch": "webpack --watch --mode development"
   },
   "dependencies": {
+    "@ai4a11y/toolkit": "file:../AI-for-Accessibility-Toolkit/toolkit",
+    "@ai4a11y/tools": "file:../AI-for-Accessibility-Toolkit/tools",
     "sheng-core-engine": "file:../sheng-core-engine"
   },
   "devDependencies": {

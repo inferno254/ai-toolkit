@@ -45,10 +45,7 @@ export class MorphologicalRootParser {
 
   public reconstructPhonetics(prefixPhonetic: string, rootPhonetic: string): string {
     if (!prefixPhonetic) return rootPhonetic;
-    if (prefixPhonetic.endsWith('-')) {
-      return `${prefixPhonetic}${rootPhonetic}`;
-    }
-    return `${prefixPhonetic}-${rootPhonetic}`;
+    const needsSeparator = !/[\s-]$/.test(prefixPhonetic);
+    return `${prefixPhonetic}${needsSeparator ? '-' : ''}${rootPhonetic}`;
   }
 }
-

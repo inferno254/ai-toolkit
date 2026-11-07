@@ -12,7 +12,7 @@
     },
     {
       "term": "dhokoma",
-      "phoneticEn": "dhocoma",
+      "phoneticEn": "dho-koma",
       "phoneticSw": "dhokoma",
       "tags": [
         "verb",
@@ -21,7 +21,7 @@
     },
     {
       "term": "mathree",
-      "phoneticEn": "ma-three",
+      "phoneticEn": "maa-three",
       "phoneticSw": "mathree",
       "tags": [
         "noun",
@@ -40,7 +40,7 @@
     },
     {
       "term": "mbogi",
-      "phoneticEn": "imbogi",
+      "phoneticEn": "m-bow-ghee",
       "phoneticSw": "mbogi",
       "tags": [
         "noun",
@@ -59,7 +59,7 @@
     },
     {
       "term": "chapaa",
-      "phoneticEn": "chapah",
+      "phoneticEn": "chah-pah",
       "phoneticSw": "chapaa",
       "tags": [
         "noun",
@@ -122,7 +122,7 @@
     },
     {
       "term": "bazenga",
-      "phoneticEn": "ba zenga",
+      "phoneticEn": "bah-zeng-gah",
       "phoneticSw": "bazenga",
       "tags": [
         "noun",
@@ -464,7 +464,7 @@
     },
     {
       "term": "kujinice",
-      "phoneticEn": "koo jee nice",
+      "phoneticEn": "koo-jee-nice",
       "phoneticSw": "kujinice",
       "tags": [
         "verb",
@@ -536,7 +536,7 @@
     },
     {
       "term": "buda",
-      "phoneticEn": "booda",
+      "phoneticEn": "boo-dah",
       "phoneticSw": "buda",
       "tags": [
         "noun",
@@ -1019,7 +1019,7 @@
     },
     {
       "term": "bambika",
-      "phoneticEn": "bambeeka",
+      "phoneticEn": "bahm-bee-kah",
       "phoneticSw": "bambika",
       "tags": [
         "verb",
@@ -1367,6 +1367,226 @@
         "noun",
         "business"
       ]
+    },
+    {
+      "term": "ronga",
+      "phoneticEn": "rong-gah",
+      "phoneticSw": "ronga",
+      "tags": [
+        "place-name",
+        "source-seeded",
+        "needs-speaker-review"
+      ],
+      "notes": "Rongai variant; pronunciation provisional."
+    },
+    {
+      "term": "rongaa",
+      "phoneticEn": "rong-gah",
+      "phoneticSw": "rongaa",
+      "tags": [
+        "place-name",
+        "source-seeded",
+        "needs-speaker-review"
+      ],
+      "notes": "Rongai variant; pronunciation provisional."
+    },
+    {
+      "term": "damee",
+      "phoneticEn": "dah-may",
+      "phoneticSw": "damee",
+      "tags": [
+        "noun",
+        "person",
+        "source-seeded",
+        "needs-speaker-review"
+      ],
+      "notes": "Spelling variant of dame; pronunciation provisional."
+    },
+    {
+      "term": "msupa",
+      "phoneticEn": "im-soo-pah",
+      "phoneticSw": "msupa",
+      "tags": [
+        "noun",
+        "person",
+        "source-seeded",
+        "needs-speaker-review"
+      ],
+      "notes": "Slang for a woman; pronunciation provisional."
+    },
+    {
+      "term": "mdosi",
+      "phoneticEn": "im-doh-see",
+      "phoneticSw": "mdosi",
+      "tags": [
+        "noun",
+        "person",
+        "source-seeded",
+        "needs-speaker-review"
+      ],
+      "notes": "Boss; pronunciation provisional."
+    },
+    {
+      "term": "mulla",
+      "phoneticEn": "moo-lah",
+      "phoneticSw": "mulla",
+      "tags": [
+        "noun",
+        "money",
+        "source-seeded",
+        "needs-speaker-review"
+      ],
+      "notes": "Money; pronunciation provisional."
+    },
+    {
+      "term": "doh",
+      "phoneticEn": "doh",
+      "phoneticSw": "doh",
+      "tags": [
+        "noun",
+        "money",
+        "source-seeded",
+        "needs-speaker-review"
+      ],
+      "notes": "Money; context-dependent; pronunciation provisional."
+    },
+    {
+      "term": "dunda",
+      "phoneticEn": "doon-dah",
+      "phoneticSw": "dunda",
+      "tags": [
+        "verb",
+        "source-seeded",
+        "needs-speaker-review"
+      ],
+      "notes": "Can refer to partying or spending; pronunciation provisional."
+    },
+    {
+      "term": "kudunda",
+      "phoneticEn": "koo-doon-dah",
+      "phoneticSw": "kudunda",
+      "tags": [
+        "verb",
+        "source-seeded",
+        "needs-speaker-review"
+      ],
+      "notes": "Context-dependent; pronunciation provisional."
+    },
+    {
+      "term": "mzinga",
+      "phoneticEn": "im-zee-ngah",
+      "phoneticSw": "mzinga",
+      "tags": [
+        "noun",
+        "source-seeded",
+        "needs-speaker-review"
+      ],
+      "notes": "Bottle; pronunciation provisional."
+    },
+    {
+      "term": "kanairo",
+      "phoneticEn": "kah-nai-ro",
+      "phoneticSw": "kanairo",
+      "tags": [
+        "place-name",
+        "source-seeded",
+        "needs-speaker-review"
+      ],
+      "notes": "Nairobi; pronunciation provisional."
+    },
+    {
+      "term": "nairobae",
+      "phoneticEn": "nai-ro-bay",
+      "phoneticSw": "nairobae",
+      "tags": [
+        "place-name",
+        "source-seeded",
+        "needs-speaker-review"
+      ],
+      "notes": "Nairobi; pronunciation provisional."
+    },
+    {
+      "term": "jango",
+      "phoneticEn": "jahng-go",
+      "phoneticSw": "jango",
+      "tags": [
+        "noun",
+        "person",
+        "source-seeded",
+        "needs-speaker-review"
+      ],
+      "notes": "Person; pronunciation provisional."
+    },
+    {
+      "term": "sapa",
+      "phoneticEn": "sah-pah",
+      "phoneticSw": "sapa",
+      "tags": [
+        "slang",
+        "source-seeded",
+        "needs-speaker-review"
+      ],
+      "notes": "Can describe being broke; context-dependent and pronunciation provisional."
+    },
+    {
+      "term": "mreki",
+      "phoneticEn": "im-reh-kee",
+      "phoneticSw": "mreki",
+      "tags": [
+        "noun",
+        "transport",
+        "source-seeded",
+        "needs-speaker-review"
+      ],
+      "notes": "Vehicle breakdown; pronunciation provisional."
+    },
+    {
+      "term": "mabs",
+      "phoneticEn": "mabs",
+      "phoneticSw": "mabs",
+      "tags": [
+        "noun",
+        "transport",
+        "source-seeded",
+        "needs-speaker-review"
+      ],
+      "notes": "Public-transport hub; pronunciation provisional."
+    },
+    {
+      "term": "panya",
+      "phoneticEn": "pahn-yah",
+      "phoneticSw": "panya",
+      "tags": [
+        "noun",
+        "transport",
+        "source-seeded",
+        "needs-speaker-review"
+      ],
+      "notes": "Informal route; pronunciation provisional."
+    },
+    {
+      "term": "kash",
+      "phoneticEn": "kash",
+      "phoneticSw": "kash",
+      "tags": [
+        "noun",
+        "money",
+        "source-seeded",
+        "needs-speaker-review"
+      ],
+      "notes": "Money; pronunciation provisional."
+    },
+    {
+      "term": "kazii",
+      "phoneticEn": "kah-zee",
+      "phoneticSw": "kazii",
+      "tags": [
+        "noun",
+        "work",
+        "source-seeded",
+        "needs-speaker-review"
+      ],
+      "notes": "Work; spelling variant; pronunciation provisional."
     },
     {
       "term": "masanse",
@@ -3482,15 +3702,15 @@
     },
     {
       "prefix": "wana",
-      "phonetic": "wana "
+      "phonetic": "wah-nah-"
     },
     {
       "prefix": "wame",
-      "phonetic": "wame "
+      "phonetic": "wah-meh-"
     },
     {
       "prefix": "wali",
-      "phonetic": "wali "
+      "phonetic": "wah-lee-"
     },
     {
       "prefix": "tuna",

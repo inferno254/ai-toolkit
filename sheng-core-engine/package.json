@@ -2,10 +2,12 @@
   "name": "sheng-core-engine",
   "version": "1.0.0",
   "description": "Shared Sheng and Kenyan code-switching phonetic smoothing engine for screen readers",
+  "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "test": "npm run build && node test/engine.test.mjs"
   },
   "keywords": ["sheng", "accessibility", "talkback", "phonetics", "screen-reader"],
   "author": "Team 1",
@@ -14,4 +16,3 @@
     "typescript": "^5.4.0"
   }
 }
-

@@ -3,7 +3,7 @@
  * Fast in-memory map/Trie providing sub-millisecond deterministic substitutions.
  */
 
-import { AffixDecomposition, MorphologicalRootParser } from './morphological-root-parser';
+import { AffixDecomposition, MorphologicalRootParser } from './morphological-root-parser.js';
 
 export interface LexiconEntry {
   term: string;
@@ -76,7 +76,7 @@ export class ShengLexiconCache {
     // Replace words while preserving punctuation and spacing
     const result = sentence.replace(/\b([a-zA-Z'-]+)\b/g, (match) => {
       const phonetic = this.resolveWordPhonetic(match, targetMode);
-      if (phonetic) {
+      if (phonetic && phonetic.toLowerCase() !== match.toLowerCase()) {
         transformedCount++;
         // Maintain first letter capitalization if source was capitalized
         if (match[0] === match[0].toUpperCase() && match[0] !== match[0].toLowerCase()) {
@@ -90,4 +90,3 @@ export class ShengLexiconCache {
     return { transformed: result, transformedCount };
   }
 }
-
