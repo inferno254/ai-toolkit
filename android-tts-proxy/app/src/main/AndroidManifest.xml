@@ -11,8 +11,17 @@
 
     <application
         android:allowBackup="true"
-        android:label="Sheng Proxy TTS"
+        android:label="@string/image_assist_app_name"
         android:supportsRtl="true">
+
+        <activity
+            android:name=".ImageAssistActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
         <service
             android:name=".ShengProxyTtsService"
@@ -26,6 +35,20 @@
             <meta-data
                 android:name="android.speech.tts"
                 android:resource="@xml/tts_engine" />
+        </service>
+
+        <service
+            android:name=".UnlabeledImageService"
+            android:label="@string/image_service_name"
+            android:description="@string/image_service_description"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/image_accessibility_service" />
         </service>
 
     </application>

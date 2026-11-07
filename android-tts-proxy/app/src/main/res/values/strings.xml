@@ -1,0 +1,5 @@
+<resources>
+    <string name="image_assist_app_name">Sheng Image OCR</string>
+    <string name="image_service_name">Sheng OCR for images</string>
+    <string name="image_service_description">When touch exploration focuses or activates an image, reads visible text in its on-screen region. Images are processed on-device unless the separate online OCR option is enabled.</string>
+</resources>

@@ -3,6 +3,8 @@ node_modules/
 package-lock.json
 !standalone-web-reader/package-lock.json
 !in-situ-web-extension/package-lock.json
+!android-tts-proxy/functions/package-lock.json
+android-tts-proxy/app/google-services.json
 
 # Build outputs
 dist/

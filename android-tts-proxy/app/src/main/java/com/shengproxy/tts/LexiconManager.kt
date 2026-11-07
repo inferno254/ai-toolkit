@@ -33,6 +33,7 @@ object LexiconManager {
             }
             lexicon.putAll(loadedLexicon)
             initialized = true
+            Log.i(TAG, "Loaded ${lexicon.size} Sheng lexicon entries")
         } catch (e: Exception) {
             Log.e(TAG, "Failed to load sheng-lexicon.json", e)
             throw IllegalStateException("Failed to initialize Sheng lexicon", e)

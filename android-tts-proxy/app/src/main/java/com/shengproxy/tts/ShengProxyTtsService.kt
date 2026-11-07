@@ -15,6 +15,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withTimeout
 import java.io.File
 import java.io.RandomAccessFile
@@ -33,21 +34,27 @@ class ShengProxyTtsService : TextToSpeechService() {
     private var activeOperation: SynthesisOperation? = null
 
     private class SynthesisOperation(val callback: SynthesisCallback) {
-        val synthesisResult = CompletableDeferred<Boolean>()
+        var synthesisResult: CompletableDeferred<Boolean>? = null
         var job: Job? = null
-        var file: File? = null
+        val files = mutableListOf<File>()
+        var currentFile: File? = null
+        var currentUtteranceId: String? = null
         var cancelled = false
         var synthesisStarted = false
-        var synthesisTerminal = false
+        var synthesisTerminal = true
         var consumerFinished = false
         var callbackFinished = false
+        var callbackStarted = false
+        var sampleRate = 0
+        var channels = 0
     }
 
     override fun onCreate() {
         super.onCreate()
         try {
             LexiconManager.initialize(this)
-            pipeline = ShengPipeline(null)
+            val pronouncer = GcpPronunciationClient()
+            pipeline = ShengPipeline(pronouncer)
 
             internalTts = TextToSpeech(this, { status ->
                 val ready = status == TextToSpeech.SUCCESS
@@ -93,6 +100,9 @@ class ShengProxyTtsService : TextToSpeechService() {
         }
         previous?.let(::cancelOperation)
         job.start()
+        runBlocking {
+            job.join()
+        }
     }
 
     override fun onStop() {
@@ -113,58 +123,76 @@ class ShengProxyTtsService : TextToSpeechService() {
             check(ready) { "Internal TTS is unavailable" }
             ensureActive(operation)
 
-            val phoneticText = pipeline?.processText(text) ?: text
+            val segments = pipeline?.processSegments(text)
+                ?: listOf(SpeechSegment(text, SpeechLanguage.ENGLISH))
             ensureActive(operation)
+            check(segments.isNotEmpty()) { "No speech segments were produced" }
 
-            val file = File.createTempFile("sheng_proxy_", ".wav", cacheDir)
-            synchronized(operationLock) {
-                operation.file = file
-                check(!operation.cancelled && activeOperation === operation) {
-                    "Synthesis was cancelled"
-                }
-            }
-
-            val utteranceId = "sheng_proxy_${System.nanoTime()}"
-            val listener = object : UtteranceProgressListener() {
-                override fun onStart(id: String?) = Unit
-
-                override fun onDone(id: String?) {
-                    if (id == utteranceId) markSynthesisTerminal(operation, true)
-                }
-
-                override fun onError(id: String?) {
-                    if (id == utteranceId) markSynthesisTerminal(operation, false)
-                }
-
-                override fun onError(id: String?, errorCode: Int) {
-                    if (id == utteranceId) markSynthesisTerminal(operation, false)
-                }
-
-                override fun onStop(id: String?, interrupted: Boolean) {
-                    if (id == utteranceId) markSynthesisTerminal(operation, false)
-                }
-            }
-
-            val result = synchronized(operationLock) {
-                check(!operation.cancelled && activeOperation === operation) {
-                    "Synthesis was cancelled"
-                }
-                val tts = internalTts ?: error("Internal TTS is unavailable")
-                tts.setOnUtteranceProgressListener(listener)
-                operation.synthesisStarted = true
-                tts.synthesizeToFile(phoneticText, android.os.Bundle(), file, utteranceId)
-            }
-            if (result != TextToSpeech.SUCCESS) {
-                markSynthesisTerminal(operation, false)
-                error("Internal TTS rejected the synthesis request: $result")
-            }
-
-            if (!operation.synthesisResult.await()) {
+            segments.forEachIndexed { index, segment ->
+                if (segment.text.isBlank()) return@forEachIndexed
                 ensureActive(operation)
-                error("Internal TTS could not synthesize the utterance")
+                val file = File.createTempFile("sheng_proxy_", ".wav", cacheDir)
+                val result = CompletableDeferred<Boolean>()
+                val utteranceId = "sheng_proxy_${System.nanoTime()}_$index"
+                synchronized(operationLock) {
+                    ensureActiveLocked(operation)
+                    operation.files += file
+                    operation.currentFile = file
+                    operation.currentUtteranceId = utteranceId
+                    operation.synthesisResult = result
+                    operation.synthesisStarted = true
+                    operation.synthesisTerminal = false
+                }
+
+                val listener = object : UtteranceProgressListener() {
+                    override fun onStart(id: String?) = Unit
+
+                    override fun onDone(id: String?) {
+                        if (id == utteranceId) markSynthesisTerminal(operation, utteranceId, true)
+                    }
+
+                    override fun onError(id: String?) {
+                        if (id == utteranceId) markSynthesisTerminal(operation, utteranceId, false)
+                    }
+
+                    override fun onError(id: String?, errorCode: Int) {
+                        if (id == utteranceId) markSynthesisTerminal(operation, utteranceId, false)
+                    }
+
+                    override fun onStop(id: String?, interrupted: Boolean) {
+                        if (id == utteranceId) markSynthesisTerminal(operation, utteranceId, false)
+                    }
+                }
+
+                val synthesisStatus = synchronized(operationLock) {
+                    ensureActiveLocked(operation)
+                    val tts = internalTts ?: error("Internal TTS is unavailable")
+                    val locale = setSpeechLanguage(tts, segment.language)
+                    Log.i(
+                        tag,
+                        "Synthesizing ${segment.language} segment with $locale (${segment.text.length} characters)"
+                    )
+                    tts.setOnUtteranceProgressListener(listener)
+                    tts.synthesizeToFile(segment.text, android.os.Bundle(), file, utteranceId)
+                }
+                if (synthesisStatus != TextToSpeech.SUCCESS) {
+                    markSynthesisTerminal(operation, utteranceId, false)
+                    error("Internal TTS rejected the synthesis request: $synthesisStatus")
+                }
+
+                if (result.await().not()) {
+                    ensureActive(operation)
+                    error("Internal TTS could not synthesize the utterance")
+                }
+                ensureActive(operation)
+                streamWaveFile(operation, file)
             }
-            ensureActive(operation)
-            streamWaveFile(operation, file)
+
+            synchronized(operationLock) {
+                ensureActiveLocked(operation)
+                operation.callbackFinished = true
+                operation.callback.done()
+            }
         } catch (e: CancellationException) {
             // onStop() owns cancellation; do not report a stopped utterance as a failure.
         } catch (e: Exception) {
@@ -176,14 +204,19 @@ class ShengProxyTtsService : TextToSpeechService() {
         }
     }
 
-    private fun markSynthesisTerminal(operation: SynthesisOperation, succeeded: Boolean) {
+    private fun markSynthesisTerminal(
+        operation: SynthesisOperation,
+        utteranceId: String,
+        succeeded: Boolean
+    ) {
         val deleteFile = synchronized(operationLock) {
+            if (operation.currentUtteranceId != utteranceId) return
             operation.synthesisTerminal = true
-            operation.synthesisResult.complete(succeeded)
+            operation.synthesisResult?.complete(succeeded)
             operation.cancelled && operation.consumerFinished
         }
         if (deleteFile) {
-            operation.file?.delete()
+            operation.files.forEach(File::delete)
             cleanupIfSafe(operation)
         }
     }
@@ -193,12 +226,22 @@ class ShengProxyTtsService : TextToSpeechService() {
             val format = readWaveFormat(wave)
             synchronized(operationLock) {
                 ensureActiveLocked(operation)
-                val result = operation.callback.start(
-                    format.sampleRate,
-                    AudioFormat.ENCODING_PCM_16BIT,
-                    format.channels
-                )
-                check(result == TextToSpeech.SUCCESS) { "Synthesis callback rejected audio" }
+                if (!operation.callbackStarted) {
+                    val result = operation.callback.start(
+                        format.sampleRate,
+                        AudioFormat.ENCODING_PCM_16BIT,
+                        format.channels
+                    )
+                    check(result == TextToSpeech.SUCCESS) { "Synthesis callback rejected audio" }
+                    operation.callbackStarted = true
+                    operation.sampleRate = format.sampleRate
+                    operation.channels = format.channels
+                } else {
+                    check(
+                        operation.sampleRate == format.sampleRate &&
+                            operation.channels == format.channels
+                    ) { "TTS voices returned incompatible audio formats" }
+                }
             }
 
             wave.seek(format.dataOffset)
@@ -216,13 +259,24 @@ class ShengProxyTtsService : TextToSpeechService() {
                 }
                 remaining -= read
             }
-
-            synchronized(operationLock) {
-                ensureActiveLocked(operation)
-                operation.callbackFinished = true
-                operation.callback.done()
-            }
         }
+    }
+
+    private fun setSpeechLanguage(tts: TextToSpeech, language: SpeechLanguage): java.util.Locale {
+        val requested = java.util.Locale(language.language, language.country)
+        var status = tts.setLanguage(requested)
+        if (status >= TextToSpeech.LANG_AVAILABLE) return requested
+
+        if (language == SpeechLanguage.SWAHILI) {
+            val swahili = java.util.Locale("sw")
+            status = tts.setLanguage(swahili)
+            if (status >= TextToSpeech.LANG_AVAILABLE) return swahili
+        }
+
+        val fallback = java.util.Locale.US
+        tts.setLanguage(fallback)
+        Log.w(tag, "Requested $language voice unavailable; using $fallback")
+        return fallback
     }
 
     private data class WaveFormat(
@@ -330,7 +384,7 @@ class ShengProxyTtsService : TextToSpeechService() {
             if (safe) operations.remove(operation)
             safe
         }
-        if (mayDelete) operation.file?.delete()
+        if (mayDelete) operation.files.forEach(File::delete)
         synchronized(operationLock) {
             if (activeOperation === operation) activeOperation = null
         }
@@ -362,7 +416,9 @@ class ShengProxyTtsService : TextToSpeechService() {
             Log.e(tag, "Internal TTS shutdown failed", e)
         }
         pendingOperations.forEach {
-            markSynthesisTerminal(it, false)
+            it.currentUtteranceId?.let { utteranceId ->
+                markSynthesisTerminal(it, utteranceId, false)
+            }
             cleanupIfSafe(it)
         }
         scope.cancel()
