@@ -15,6 +15,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withTimeout
 import java.io.File
 import java.io.RandomAccessFile
@@ -24,6 +25,12 @@ import kotlin.math.ceil
 import kotlin.math.roundToInt
 
 class ShengProxyTtsService : TextToSpeechService() {
+
+    private data class LanguageSelection(
+        val requestedLocaleAvailable: Boolean,
+        val selectedLocale: Locale,
+        val status: Int
+    )
 
     private companion object {
         const val OUTPUT_SAMPLE_RATE = 22050
@@ -49,7 +56,6 @@ class ShengProxyTtsService : TextToSpeechService() {
         var cancelled = false
         var synthesisStarted = false
         var synthesisTerminal = false
-        var synthesisInFlight = false
         var consumerFinished = false
         var callbackFinished = false
     }
@@ -64,6 +70,14 @@ class ShengProxyTtsService : TextToSpeechService() {
                 val ready = status == TextToSpeech.SUCCESS
                 if (ready) {
                     Log.d(tag, "Internal TTS initialized")
+                    val swahiliVoices = internalTts?.voices.orEmpty()
+                        .filter { it.locale.language == "sw" }
+                        .joinToString { "${it.name} (${it.locale})" }
+                    Log.i(
+                        tag,
+                        if (swahiliVoices.isBlank()) "No installed Kiswahili voices reported by Google TTS"
+                        else "Installed Kiswahili voices: $swahiliVoices"
+                    )
                 } else {
                     Log.e(tag, "Internal TTS initialization failed: $status")
                 }
@@ -92,10 +106,18 @@ class ShengProxyTtsService : TextToSpeechService() {
     }
 
     override fun onIsLanguageAvailable(lang: String?, country: String?, variant: String?): Int =
-        TextToSpeech.LANG_AVAILABLE
+        if (lang.equals("eng", ignoreCase = true) ||
+            lang.equals("en", ignoreCase = true) ||
+            lang.equals("swa", ignoreCase = true) ||
+            lang.equals("sw", ignoreCase = true)
+        ) {
+            TextToSpeech.LANG_AVAILABLE
+        } else {
+            TextToSpeech.LANG_NOT_SUPPORTED
+        }
 
     override fun onLoadLanguage(lang: String?, country: String?, variant: String?): Int =
-        TextToSpeech.LANG_AVAILABLE
+        onIsLanguageAvailable(lang, country, variant)
 
     override fun onGetLanguage(): Array<String> = arrayOf("eng", "US", "")
 
@@ -120,6 +142,9 @@ class ShengProxyTtsService : TextToSpeechService() {
         }
         previous?.let(::cancelOperation)
         job.start()
+        runBlocking {
+            job.join()
+        }
     }
 
     override fun onStop() {
@@ -198,29 +223,34 @@ class ShengProxyTtsService : TextToSpeechService() {
         val status = synchronized(operationLock) {
             ensureActiveLocked(operation)
             val tts = internalTts ?: error("Internal TTS is unavailable")
-            val languageStatus = setSpeechLanguage(tts, segment.language)
+            val languageSelection = setSpeechLanguage(tts, segment.language)
             operation.currentUtteranceId = utteranceId
             operation.synthesisResult = result
             operation.synthesisStarted = true
             operation.synthesisTerminal = false
-            operation.synthesisInFlight = true
             val synthesisStatus = try {
                 tts.synthesizeToFile(segment.text, android.os.Bundle(), file, utteranceId)
             } catch (e: Exception) {
-                operation.synthesisInFlight = false
                 operation.synthesisTerminal = true
                 result.complete(false)
                 throw e
             }
-            languageStatus to synthesisStatus
+            languageSelection to synthesisStatus
         }
         if (status.second != TextToSpeech.SUCCESS) {
             markSynthesisTerminal(utteranceId, false)
             error("Internal TTS rejected ${segment.language} synthesis: ${status.second}")
         }
-        if (status.first < TextToSpeech.LANG_AVAILABLE) {
-            Log.w(tag, "Requested ${segment.language} voice is unavailable; using the engine fallback")
+        if (!status.first.requestedLocaleAvailable) {
+            Log.w(
+                tag,
+                "Requested ${segment.language} locale is unavailable; selected ${status.first.selectedLocale}"
+            )
         }
+        Log.i(
+            tag,
+            "Synthesizing ${segment.language} span (${segment.text.length} characters) with ${status.first.selectedLocale}"
+        )
         if (!result.await()) {
             ensureActive(operation)
             error("Internal TTS could not synthesize ${segment.language} text")
@@ -229,24 +259,30 @@ class ShengProxyTtsService : TextToSpeechService() {
         return file
     }
 
-    private fun setSpeechLanguage(tts: TextToSpeech, language: SpeechLanguage): Int {
+    private fun setSpeechLanguage(tts: TextToSpeech, language: SpeechLanguage): LanguageSelection {
         val requested = Locale(language.language, language.country)
         var status = tts.setLanguage(requested)
-        if (status >= TextToSpeech.LANG_AVAILABLE) return status
-
-        if (language == SpeechLanguage.SWAHILI) {
-            status = tts.setLanguage(Locale("sw"))
-            if (status >= TextToSpeech.LANG_AVAILABLE) return status
+        if (status >= TextToSpeech.LANG_AVAILABLE) {
+            return LanguageSelection(true, requested, status)
         }
 
-        return tts.setLanguage(Locale.US)
+        if (language == SpeechLanguage.SWAHILI) {
+            val swahili = Locale("sw")
+            status = tts.setLanguage(swahili)
+            if (status >= TextToSpeech.LANG_AVAILABLE) {
+                return LanguageSelection(false, swahili, status)
+            }
+        }
+
+        val fallback = Locale.US
+        status = tts.setLanguage(fallback)
+        return LanguageSelection(false, fallback, status)
     }
 
     private fun markSynthesisTerminal(utteranceId: String, succeeded: Boolean) {
         val operationToCleanup = synchronized(operationLock) {
             val operation = operations.firstOrNull { it.currentUtteranceId == utteranceId } ?: return
             operation.synthesisTerminal = true
-            operation.synthesisInFlight = false
             operation.synthesisResult?.complete(succeeded)
             operation.takeIf { it.cancelled && it.consumerFinished }
         }
@@ -388,8 +424,8 @@ class ShengProxyTtsService : TextToSpeechService() {
     }
 
     private fun ensureActiveLocked(operation: SynthesisOperation) {
-        check(!operation.cancelled && activeOperation === operation) {
-            "Synthesis was cancelled"
+        if (operation.cancelled || activeOperation !== operation) {
+            throw CancellationException("Synthesis was cancelled")
         }
     }
 

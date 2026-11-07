@@ -10,14 +10,20 @@ data class SpeechSegment(val text: String, val language: SpeechLanguage)
 class ShengPipeline {
 
     private val swahiliWords = setOf(
-        "aje", "asante", "bado", "basi", "bila", "bora", "chakula", "chini",
-        "hapana", "habari", "hapa", "hapo", "hawa", "hii", "hizi", "hiyo", "hivyo",
-        "huko", "huku", "jana", "je", "juu", "kama", "kesho", "kidogo", "kwa",
-        "kweli", "lakini", "leo", "maji", "mimi", "mtu", "mtoto", "mzuri", "na",
-        "nani", "ndiyo", "niko", "nime", "nini", "nyumba", "pale", "pole", "rafiki",
-        "sana", "sasa", "siku", "siko", "sisi", "tafadhali", "tunataka", "tuna",
-        "tuko", "una", "unafanya", "unataka", "unaweza", "uko", "vizuri", "wao",
-        "wapi", "wako", "wame", "watu", "wewe", "ya", "yako", "yangu", "yeye", "zao"
+        "aje", "aka", "alikuwa", "ambao", "ambayo", "asante", "au", "baba", "baada",
+        "bado", "basi", "bila", "bora", "bwana", "chakula", "chini", "dada", "darasa",
+        "dhidi", "dogo", "hata", "habari", "hapana", "hapa", "hapo", "hawa", "hayo",
+        "hii", "hivyo", "hizi", "hiyo", "huyo", "huku", "huko", "iko", "ile", "ingawa",
+        "jana", "jambo", "je", "juu", "kabisa", "kabla", "kama", "kila", "kitu",
+        "kesho", "kidogo", "kuja", "kule", "kuliko", "kwa", "kwamba", "kweli", "lakini",
+        "leo", "mambo", "maji", "mara", "mbele", "mimi", "mkubwa", "mkuu", "moja",
+        "moto", "mtu", "mtoto", "muda", "mwezi", "mzuri", "na", "nani", "ndani",
+        "ndiyo", "ndio", "niko", "nime", "nini", "njia", "nyingi", "nyumba", "nyuma",
+        "pamoja", "pale", "pesa", "poa", "pole", "rafiki", "sana", "sasa", "sawa", "shule",
+        "sijui", "siku", "siko", "sisi", "tangu", "tatu", "tafadhali", "tunataka",
+        "tuna", "tuko", "ujue", "uko", "una", "unafanya", "unataka", "unaweza",
+        "utakuwa", "vizuri", "wao", "wako", "wakati", "wame", "wapi", "watu", "wazuri",
+        "wengi", "wewe", "wengine", "ya", "yako", "yangu", "yeye", "yote", "zao"
     )
 
     fun processText(input: String): String =
@@ -52,9 +58,14 @@ class ShengPipeline {
             val language: SpeechLanguage
             val outputWord: String
 
-            if (lowerWord in swahiliWords) {
+            if (lowerWord in swahiliWords ||
+                pronunciation != null && pronunciation.swahili != pronunciation.term
+            ) {
                 language = SpeechLanguage.SWAHILI
-                outputWord = pronunciation?.swahili ?: sourceWord
+                outputWord = preserveInitialCapitalization(
+                    sourceWord,
+                    pronunciation?.swahili ?: sourceWord
+                )
             } else if (pronunciation != null) {
                 language = SpeechLanguage.ENGLISH
                 outputWord = preserveInitialCapitalization(sourceWord, pronunciation.english)

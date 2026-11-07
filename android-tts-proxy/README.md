@@ -9,8 +9,9 @@ The service reads the shared core lexicon's entry and prefix arrays, respells
 known Sheng terms, and groups recognized Kiswahili and English spans. It asks
 Google TTS to synthesize each span with the matching locale, converts each WAV
 to a common 22,050 Hz mono PCM stream, and streams that audio to Android's
-`SynthesisCallback`. The bundled Kiswahili word list is intentionally small;
-unrecognized words remain in the English span. `onStop()` cancels the active
+`SynthesisCallback`. The bundled Kiswahili word list is a small, explicit starter list; lexicon
+entries with distinct Kiswahili pronunciations also use the Kiswahili voice.
+Unrecognized words remain in the English span. `onStop()` cancels the active
 job and stops the internal engine. A canceled synthesis file is retained until
 the internal engine reports that writing has stopped, avoiding deletion while
 it may still be in use.

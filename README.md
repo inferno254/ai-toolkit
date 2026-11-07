@@ -43,7 +43,7 @@ Sheng Mode for Screen Readers is a screen-reader support project that phonetical
 - **Purpose**: Android system TTS engine that adapts Sheng words and switches recognized Kiswahili/English spans to the corresponding Google TTS locale
 - **Features**:
   - Reads the shared core lexicon and supports lexicon-backed Sheng phonetics and Swahili prefix decomposition
-  - Segments a limited, bundled set of Kiswahili words from English/Sheng text and synthesizes each segment with `sw-KE`/English when those Google voices are available
+  - Segments a starter list of Kiswahili words plus lexicon entries with distinct Kiswahili spellings from English/Sheng text; synthesizes each segment with `sw-KE`/English when those Google voices are available
   - Resamples generated audio to Android's PCM format before passing it to TalkBack
   - Unknown words remain in the English segment; the initial Kiswahili word inventory needs community review and expansion
   - Offline synthesis depends on Google TTS and its English/Kiswahili voice data being available offline

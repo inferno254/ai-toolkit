@@ -14,7 +14,7 @@ class ShengPipelineTest {
         )
         val segments = pipeline.processSegments("\tJambo,   dunia!\n") { entries[it] }
 
-        assertEquals("\tJAMBO,   DUNIA!\n", segments.joinToString("") { it.text })
+        assertEquals("\tJambo,   DUNIA!\n", segments.joinToString("") { it.text })
     }
 
     @Test
@@ -36,6 +36,22 @@ class ShengPipelineTest {
                 SpeechSegment(" ya", SpeechLanguage.SWAHILI),
                 SpeechSegment(" maa-three, I'm home.", SpeechLanguage.ENGLISH)
             ),
+            segments
+        )
+    }
+
+    @Test
+    fun pipelineUsesSwahiliPronunciationForLexiconEntriesWithSwahiliForm() {
+        val entries = mapOf(
+            "mullah" to LexiconPronunciation(
+                "mullah", "moola", "mula", setOf("noun", "money")
+            )
+        )
+
+        val segments = pipeline.processSegments("Mullah iko poa!") { entries[it] }
+
+        assertEquals(
+            listOf(SpeechSegment("Mula iko poa!", SpeechLanguage.SWAHILI)),
             segments
         )
     }
