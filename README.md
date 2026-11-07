@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-Sheng Mode for Screen Readers is a dual-architecture system that phonetically smooths Kenyan Sheng/Swahili/English code-switching for TalkBack screen readers. Built on the AI for Accessibility Toolkit, it ensures users with low vision or blindness can hear Sheng phrases pronounced correctly without changing the visual text.
+Sheng Mode for Screen Readers is a screen-reader support project that phonetically smooths Kenyan Sheng/Swahili/English code-switching for TalkBack users. Its browser reader, extension, and Android TTS proxy share the core lexicon; visible source text is kept intact.
 
 ## Architecture
 
@@ -39,7 +39,18 @@ Sheng Mode for Screen Readers is a dual-architecture system that phonetically sm
 - **Build**: cd in-situ-web-extension && npm install && npm run build
 - **Load**: chrome://extensions -> Load unpacked -> dist/
 
-### 4. AI-for-Accessibility-Toolkit (submodule)
+### 4. android-tts-proxy
+- **Purpose**: Android system TTS engine that adapts Sheng words and switches recognized Kiswahili/English spans to the corresponding Google TTS locale
+- **Features**:
+  - Reads the shared core lexicon and supports lexicon-backed Sheng phonetics and Swahili prefix decomposition
+  - Segments a limited, bundled set of Kiswahili words from English/Sheng text and synthesizes each segment with `sw-KE`/English when those Google voices are available
+  - Resamples generated audio to Android's PCM format before passing it to TalkBack
+  - Unknown words remain in the English segment; the initial Kiswahili word inventory needs community review and expansion
+  - Offline synthesis depends on Google TTS and its English/Kiswahili voice data being available offline
+- **Build**: `cd android-tts-proxy && .\gradlew.bat :app:assembleDebug`
+- **Install**: `adb install -r app\build\outputs\apk\debug\app-debug.apk`, then choose **Sheng Proxy TTS** in Android's Text-to-speech settings
+
+### 5. AI-for-Accessibility-Toolkit (submodule)
 - **Purpose**: Full accessibility toolkit with profiles, skills, consent
 - **Features**:
   - Librarian for profile management
@@ -70,20 +81,20 @@ cd ..
 ```
 
 ### 3. Run the standalone reader
-`ash
+```bash
 cd standalone-web-reader
 npm install
 npm run dev
 # Open http://localhost:3000
-`
+```
 
 ### 4. Build the Chrome extension
-`ash
+```bash
 cd in-situ-web-extension
 npm install
 npm run build
 # Load in Chrome: chrome://extensions -> Load unpacked -> dist/
-`
+```
 
 ## Testing with TalkBack
 
@@ -92,6 +103,7 @@ npm run build
 3. Click a preset and press  Smooth Phonetics
 4. Press Hear Smoothed to hear the phonetic transformation
 5. Compare with Hear Original to hear the difference
+6. On Android, select **Sheng Proxy TTS** as the system engine and test a mixed phrase such as “Leo tuko kwa stage ya mathree”; verify Google TTS has Kiswahili voice data installed to hear the intended locale switch
 
 ## Key Design Principles
 

@@ -2,53 +2,108 @@ package com.shengproxy.tts
 
 import android.content.Context
 import android.util.Log
-import org.json.JSONObject
+import com.google.gson.JsonParser
 import java.io.BufferedReader
 import java.io.InputStreamReader
 
-/**
- * LexiconManager: Singleton that loads sheng-lexicon.json from assets.
- * O(1) lookup with morphological prefix stripping for Swahili prefixes.
- */
+data class LexiconPronunciation(
+    val term: String,
+    val english: String,
+    val swahili: String,
+    val tags: Set<String>
+)
+
+data class LexiconPrefix(val prefix: String, val phonetic: String)
+
+data class ShengLexicon(
+    val entries: Map<String, LexiconPronunciation>,
+    val prefixes: List<LexiconPrefix>
+)
+
 object LexiconManager {
     private const val TAG = "LexiconManager"
-    private val lexicon = HashMap<String, String>(1024)
-    private val swahiliPrefixes = arrayOf("ku", "wana", "vi", "m", "wa", "tu", "u", "ni", "li", "ya", "ma", "ki")
+    private var lexicon = ShengLexicon(emptyMap(), emptyList())
     private var initialized = false
 
+    @Synchronized
     fun initialize(context: Context) {
         if (initialized) return
         try {
             val json = context.assets.open("sheng-lexicon.json").use { inputStream ->
-                BufferedReader(InputStreamReader(inputStream), 8192).use { reader ->
-                    reader.readText()
-                }
+                BufferedReader(InputStreamReader(inputStream), 8192).use { it.readText() }
             }
-            val obj = JSONObject(json)
-            val loadedLexicon = HashMap<String, String>(obj.length())
-            val keys = obj.keys()
-            while (keys.hasNext()) {
-                val key = keys.next()
-                loadedLexicon[key.lowercase()] = obj.getString(key)
-            }
-            lexicon.putAll(loadedLexicon)
+            lexicon = parse(json)
+            check(lexicon.entries.isNotEmpty()) { "The Sheng lexicon has no entries" }
             initialized = true
+            Log.i(TAG, "Loaded ${lexicon.entries.size} phonetic entries")
         } catch (e: Exception) {
             Log.e(TAG, "Failed to load sheng-lexicon.json", e)
             throw IllegalStateException("Failed to initialize Sheng lexicon", e)
         }
     }
 
-    fun lookup(word: String): String? {
-        val lower = word.lowercase()
-        // Direct O(1) lookup
-        lexicon[lower]?.let { return it }
+    internal fun parse(json: String): ShengLexicon {
+        val root = JsonParser.parseString(json).asJsonObject
+        val entriesJson = root.getAsJsonArray("lexicon")
+        val entries = LinkedHashMap<String, LexiconPronunciation>(entriesJson.size())
+        for (entryElement in entriesJson) {
+            val entry = entryElement.asJsonObject
+            val term = entry.get("term").asString.trim().lowercase()
+            require(term.isNotEmpty()) { "Lexicon entry has an empty term" }
+            val tagsJson = entry.getAsJsonArray("tags")
+            val tags = buildSet {
+                if (tagsJson != null) {
+                    for (tag in tagsJson) add(tag.asString.lowercase())
+                }
+            }
+            entries[term] = LexiconPronunciation(
+                term = term,
+                english = entry.get("phoneticEn")?.asString ?: term,
+                swahili = entry.get("phoneticSw")?.asString ?: term,
+                tags = tags
+            )
+        }
 
-        // Morphological prefix stripping
-        for (prefix in swahiliPrefixes) {
-            if (lower.startsWith(prefix) && lower.length > prefix.length + 1) {
-                val root = lower.substring(prefix.length)
-                lexicon[root]?.let { return "$prefix$it" }
+        val prefixesJson = root.getAsJsonArray("prefixes")
+        val prefixes = buildList {
+            if (prefixesJson != null) {
+                for (prefixElement in prefixesJson) {
+                    val prefix = prefixElement.asJsonObject
+                    add(
+                        LexiconPrefix(
+                            prefix.get("prefix").asString.lowercase(),
+                            prefix.get("phonetic").asString
+                        )
+                    )
+                }
+            }
+        }.sortedByDescending { it.prefix.length }
+
+        return ShengLexicon(entries, prefixes)
+    }
+
+    fun lookup(word: String): LexiconPronunciation? {
+        return resolve(word, lexicon)
+    }
+
+    internal fun resolve(word: String, data: ShengLexicon): LexiconPronunciation? {
+        val lower = word.lowercase()
+        data.entries[lower]?.let { return it }
+
+        for (prefix in data.prefixes) {
+            if (lower.startsWith(prefix.prefix) && lower.length > prefix.prefix.length + 2) {
+                data.entries[lower.substring(prefix.prefix.length)]?.let { root ->
+                    val separator = if (prefix.phonetic.endsWith(" ") || prefix.phonetic.endsWith("-")) {
+                        ""
+                    } else {
+                        "-"
+                    }
+                    return root.copy(
+                        term = lower,
+                        english = prefix.phonetic + separator + root.english,
+                        swahili = lower
+                    )
+                }
             }
         }
         return null

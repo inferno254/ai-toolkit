@@ -1,92 +1,84 @@
 package com.shengproxy.tts
 
-import kotlinx.coroutines.coroutineScope
+enum class SpeechLanguage(val language: String, val country: String) {
+    ENGLISH("en", "US"),
+    SWAHILI("sw", "KE")
+}
 
-/**
- * ShengPipeline: Optimized for short conversational bursts.
- * - Fast lexicon path (95%+ of short messages)
- * - Gemini only for unknown slang
- * - Minimal allocation for short strings
- */
-class ShengPipeline(private val geminiClient: GeminiClient?) {
+data class SpeechSegment(val text: String, val language: SpeechLanguage)
 
-    private val slangRegex = Regex("[a-zA-Z]+[0-9]+|[0-9]+[a-zA-Z]+")
+class ShengPipeline {
 
-    suspend fun processText(input: String): String = coroutineScope {
-        // Fast path: if input is short and all words are in lexicon, skip complex processing
-        if (input.length < 100) {
-            val quickResult = quickLexiconPass(input)
-            if (quickResult != null) return@coroutineScope quickResult
-        }
+    private val swahiliWords = setOf(
+        "aje", "asante", "bado", "basi", "bila", "bora", "chakula", "chini",
+        "hapana", "habari", "hapa", "hapo", "hawa", "hii", "hizi", "hiyo", "hivyo",
+        "huko", "huku", "jana", "je", "juu", "kama", "kesho", "kidogo", "kwa",
+        "kweli", "lakini", "leo", "maji", "mimi", "mtu", "mtoto", "mzuri", "na",
+        "nani", "ndiyo", "niko", "nime", "nini", "nyumba", "pale", "pole", "rafiki",
+        "sana", "sasa", "siku", "siko", "sisi", "tafadhali", "tunataka", "tuna",
+        "tuko", "una", "unafanya", "unataka", "unaweza", "uko", "vizuri", "wao",
+        "wapi", "wako", "wame", "watu", "wewe", "ya", "yako", "yangu", "yeye", "zao"
+    )
 
-        val tokens = tokenize(input)
-        val result = StringBuilder(input.length + 20)
+    fun processText(input: String): String =
+        processSegments(input).joinToString(separator = "") { it.text }
 
-        for (token in tokens) {
-            val trimmed = token.trim()
-            if (trimmed.isEmpty() || trimmed.all { it.isWhitespace() || !it.isLetterOrDigit() }) {
-                result.append(token)
-                continue
-            }
-
-            val lexiconResult = LexiconManager.lookup(trimmed)
-            if (lexiconResult != null) {
-                result.append(lexiconResult)
-                continue
-            }
-
-            val isSlang = slangRegex.containsMatchIn(trimmed) ||
-                    (trimmed.length <= 4 && trimmed.any { it.isLetter() }) ||
-                    trimmed.contains("'") || trimmed.contains("-")
-
-            if (isSlang && geminiClient != null) {
-                try {
-                    val fallback = geminiClient.getPhoneticFallback(trimmed)
-                    result.append(fallback)
-                } catch (e: Exception) {
-                    result.append(trimmed)
-                }
-            } else {
-                result.append(trimmed)
-            }
-        }
-
-        return@coroutineScope result.toString()
-    }
-
-    internal fun quickLexiconPass(
+    fun processSegments(
         input: String,
-        lookup: (String) -> String? = LexiconManager::lookup
-    ): String? {
-        val words = Regex("[\\p{L}\\p{N}]+").findAll(input)
-        val result = StringBuilder()
+        lookup: (String) -> LexiconPronunciation? = LexiconManager::lookup
+    ): List<SpeechSegment> {
+        val result = mutableListOf<SpeechSegment>()
+        val pending = StringBuilder()
+        val words = Regex("[\\p{L}\\p{M}\\p{N}]+(?:['’-][\\p{L}\\p{M}\\p{N}]+)*")
         var cursor = 0
-        for (word in words) {
-            result.append(input, cursor, word.range.first)
-            val replacement = lookup(word.value.lowercase()) ?: return null
-            result.append(replacement)
-            cursor = word.range.last + 1
-        }
-        if (cursor == 0) return null
-        result.append(input, cursor, input.length)
-        return result.toString()
-    }
 
-    private fun tokenize(input: String): List<String> {
-        val tokens = mutableListOf<String>()
-        val regex = Regex("(\\s+|[^\\w\\s]+)")
-        val parts = input.split(regex)
-        val delimiters = regex.findAll(input).map { it.value }.toList()
-
-        var d = 0
-        for (part in parts) {
-            if (part.isNotEmpty()) tokens.add(part)
-            if (d < delimiters.size) {
-                tokens.add(delimiters[d])
-                d++
+        fun append(language: SpeechLanguage, text: String) {
+            if (text.isEmpty()) return
+            val combinedText = pending.toString() + text
+            pending.setLength(0)
+            val last = result.lastOrNull()
+            if (last?.language == language) {
+                result[result.lastIndex] = last.copy(text = last.text + combinedText)
+            } else {
+                result += SpeechSegment(combinedText, language)
             }
         }
-        while (tokens.isNotEmpty() && tokens.last().isEmpty()) tokens.removeAt(tokens.size - 1)
-        return tokens
+
+        for (match in words.findAll(input)) {
+            pending.append(input, cursor, match.range.first)
+            val sourceWord = match.value
+            val lowerWord = sourceWord.lowercase()
+            val pronunciation = lookup(lowerWord)
+            val language: SpeechLanguage
+            val outputWord: String
+
+            if (lowerWord in swahiliWords) {
+                language = SpeechLanguage.SWAHILI
+                outputWord = pronunciation?.swahili ?: sourceWord
+            } else if (pronunciation != null) {
+                language = SpeechLanguage.ENGLISH
+                outputWord = preserveInitialCapitalization(sourceWord, pronunciation.english)
+            } else {
+                language = SpeechLanguage.ENGLISH
+                outputWord = sourceWord
+            }
+
+            append(language, outputWord)
+            cursor = match.range.last + 1
+        }
+
+        pending.append(input, cursor, input.length)
+        if (result.isNotEmpty() && pending.isNotEmpty()) {
+            val last = result.last()
+            result[result.lastIndex] = last.copy(text = last.text + pending)
+        } else if (pending.isNotEmpty()) {
+            result += SpeechSegment(pending.toString(), SpeechLanguage.ENGLISH)
+        }
+        return result
+    }
+
+    private fun preserveInitialCapitalization(source: String, pronunciation: String): String {
+        if (source.firstOrNull()?.isUpperCase() != true) return pronunciation
+        return pronunciation.replaceFirstChar { it.uppercase() }
     }
 }

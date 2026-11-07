@@ -18,9 +18,18 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withTimeout
 import java.io.File
 import java.io.RandomAccessFile
+import java.util.Locale
 import java.util.concurrent.TimeUnit
+import kotlin.math.ceil
+import kotlin.math.roundToInt
 
 class ShengProxyTtsService : TextToSpeechService() {
+
+    private companion object {
+        const val OUTPUT_SAMPLE_RATE = 22050
+        const val OUTPUT_CHANNELS = 1
+        const val LANGUAGE_SWITCH_SILENCE_BYTES = 2204
+    }
 
     private val tag = "ShengProxyTtsService"
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
@@ -33,12 +42,14 @@ class ShengProxyTtsService : TextToSpeechService() {
     private var activeOperation: SynthesisOperation? = null
 
     private class SynthesisOperation(val callback: SynthesisCallback) {
-        val synthesisResult = CompletableDeferred<Boolean>()
         var job: Job? = null
-        var file: File? = null
+        val files = mutableListOf<File>()
+        var currentUtteranceId: String? = null
+        var synthesisResult: CompletableDeferred<Boolean>? = null
         var cancelled = false
         var synthesisStarted = false
         var synthesisTerminal = false
+        var synthesisInFlight = false
         var consumerFinished = false
         var callbackFinished = false
     }
@@ -47,9 +58,9 @@ class ShengProxyTtsService : TextToSpeechService() {
         super.onCreate()
         try {
             LexiconManager.initialize(this)
-            pipeline = ShengPipeline(null)
+            pipeline = ShengPipeline()
 
-            internalTts = TextToSpeech(this, { status ->
+            val tts = TextToSpeech(this, { status ->
                 val ready = status == TextToSpeech.SUCCESS
                 if (ready) {
                     Log.d(tag, "Internal TTS initialized")
@@ -58,6 +69,22 @@ class ShengProxyTtsService : TextToSpeechService() {
                 }
                 ttsReady.complete(ready)
             }, "com.google.android.tts")
+            tts.setOnUtteranceProgressListener(object : UtteranceProgressListener() {
+                override fun onStart(id: String?) = Unit
+                override fun onDone(id: String?) {
+                    id?.let { markSynthesisTerminal(it, true) }
+                }
+                override fun onError(id: String?) {
+                    id?.let { markSynthesisTerminal(it, false) }
+                }
+                override fun onError(id: String?, errorCode: Int) {
+                    id?.let { markSynthesisTerminal(it, false) }
+                }
+                override fun onStop(id: String?, interrupted: Boolean) {
+                    id?.let { markSynthesisTerminal(it, false) }
+                }
+            })
+            internalTts = tts
         } catch (e: Exception) {
             ttsReady.complete(false)
             Log.e(tag, "Service creation failed", e)
@@ -113,58 +140,40 @@ class ShengProxyTtsService : TextToSpeechService() {
             check(ready) { "Internal TTS is unavailable" }
             ensureActive(operation)
 
-            val phoneticText = pipeline?.processText(text) ?: text
+            val segments = pipeline?.processSegments(text).orEmpty().filter { it.text.isNotBlank() }
             ensureActive(operation)
 
-            val file = File.createTempFile("sheng_proxy_", ".wav", cacheDir)
             synchronized(operationLock) {
-                operation.file = file
-                check(!operation.cancelled && activeOperation === operation) {
-                    "Synthesis was cancelled"
-                }
+                ensureActiveLocked(operation)
+                val result = operation.callback.start(
+                    OUTPUT_SAMPLE_RATE,
+                    AudioFormat.ENCODING_PCM_16BIT,
+                    OUTPUT_CHANNELS
+                )
+                check(result == TextToSpeech.SUCCESS) { "Synthesis callback rejected audio" }
             }
 
-            val utteranceId = "sheng_proxy_${System.nanoTime()}"
-            val listener = object : UtteranceProgressListener() {
-                override fun onStart(id: String?) = Unit
-
-                override fun onDone(id: String?) {
-                    if (id == utteranceId) markSynthesisTerminal(operation, true)
-                }
-
-                override fun onError(id: String?) {
-                    if (id == utteranceId) markSynthesisTerminal(operation, false)
-                }
-
-                override fun onError(id: String?, errorCode: Int) {
-                    if (id == utteranceId) markSynthesisTerminal(operation, false)
-                }
-
-                override fun onStop(id: String?, interrupted: Boolean) {
-                    if (id == utteranceId) markSynthesisTerminal(operation, false)
-                }
-            }
-
-            val result = synchronized(operationLock) {
-                check(!operation.cancelled && activeOperation === operation) {
-                    "Synthesis was cancelled"
-                }
-                val tts = internalTts ?: error("Internal TTS is unavailable")
-                tts.setOnUtteranceProgressListener(listener)
-                operation.synthesisStarted = true
-                tts.synthesizeToFile(phoneticText, android.os.Bundle(), file, utteranceId)
-            }
-            if (result != TextToSpeech.SUCCESS) {
-                markSynthesisTerminal(operation, false)
-                error("Internal TTS rejected the synthesis request: $result")
-            }
-
-            if (!operation.synthesisResult.await()) {
+            var previousLanguage: SpeechLanguage? = null
+            for (segment in segments) {
                 ensureActive(operation)
-                error("Internal TTS could not synthesize the utterance")
+                val file = synthesizeSegment(operation, segment)
+                try {
+                    if (previousLanguage != null && previousLanguage != segment.language) {
+                        streamPcm(operation, ByteArray(LANGUAGE_SWITCH_SILENCE_BYTES))
+                    }
+                    streamPcm(operation, readNormalizedPcm(file))
+                    previousLanguage = segment.language
+                } finally {
+                    file.delete()
+                    synchronized(operationLock) { operation.files.remove(file) }
+                }
             }
-            ensureActive(operation)
-            streamWaveFile(operation, file)
+
+            synchronized(operationLock) {
+                ensureActiveLocked(operation)
+                operation.callbackFinished = true
+                operation.callback.done()
+            }
         } catch (e: CancellationException) {
             // onStop() owns cancellation; do not report a stopped utterance as a failure.
         } catch (e: Exception) {
@@ -176,52 +185,118 @@ class ShengProxyTtsService : TextToSpeechService() {
         }
     }
 
-    private fun markSynthesisTerminal(operation: SynthesisOperation, succeeded: Boolean) {
-        val deleteFile = synchronized(operationLock) {
-            operation.synthesisTerminal = true
-            operation.synthesisResult.complete(succeeded)
-            operation.cancelled && operation.consumerFinished
+    private suspend fun synthesizeSegment(
+        operation: SynthesisOperation,
+        segment: SpeechSegment
+    ): File {
+        val file = synchronized(operationLock) {
+            ensureActiveLocked(operation)
+            File.createTempFile("sheng_proxy_", ".wav", cacheDir).also(operation.files::add)
         }
-        if (deleteFile) {
-            operation.file?.delete()
-            cleanupIfSafe(operation)
+        val utteranceId = "sheng_proxy_${System.nanoTime()}"
+        val result = CompletableDeferred<Boolean>()
+        val status = synchronized(operationLock) {
+            ensureActiveLocked(operation)
+            val tts = internalTts ?: error("Internal TTS is unavailable")
+            val languageStatus = setSpeechLanguage(tts, segment.language)
+            operation.currentUtteranceId = utteranceId
+            operation.synthesisResult = result
+            operation.synthesisStarted = true
+            operation.synthesisTerminal = false
+            operation.synthesisInFlight = true
+            val synthesisStatus = try {
+                tts.synthesizeToFile(segment.text, android.os.Bundle(), file, utteranceId)
+            } catch (e: Exception) {
+                operation.synthesisInFlight = false
+                operation.synthesisTerminal = true
+                result.complete(false)
+                throw e
+            }
+            languageStatus to synthesisStatus
+        }
+        if (status.second != TextToSpeech.SUCCESS) {
+            markSynthesisTerminal(utteranceId, false)
+            error("Internal TTS rejected ${segment.language} synthesis: ${status.second}")
+        }
+        if (status.first < TextToSpeech.LANG_AVAILABLE) {
+            Log.w(tag, "Requested ${segment.language} voice is unavailable; using the engine fallback")
+        }
+        if (!result.await()) {
+            ensureActive(operation)
+            error("Internal TTS could not synthesize ${segment.language} text")
+        }
+        ensureActive(operation)
+        return file
+    }
+
+    private fun setSpeechLanguage(tts: TextToSpeech, language: SpeechLanguage): Int {
+        val requested = Locale(language.language, language.country)
+        var status = tts.setLanguage(requested)
+        if (status >= TextToSpeech.LANG_AVAILABLE) return status
+
+        if (language == SpeechLanguage.SWAHILI) {
+            status = tts.setLanguage(Locale("sw"))
+            if (status >= TextToSpeech.LANG_AVAILABLE) return status
+        }
+
+        return tts.setLanguage(Locale.US)
+    }
+
+    private fun markSynthesisTerminal(utteranceId: String, succeeded: Boolean) {
+        val operationToCleanup = synchronized(operationLock) {
+            val operation = operations.firstOrNull { it.currentUtteranceId == utteranceId } ?: return
+            operation.synthesisTerminal = true
+            operation.synthesisInFlight = false
+            operation.synthesisResult?.complete(succeeded)
+            operation.takeIf { it.cancelled && it.consumerFinished }
+        }
+        operationToCleanup?.let(::cleanupIfSafe)
+    }
+
+    private fun readNormalizedPcm(file: File): ByteArray {
+        RandomAccessFile(file, "r").use { wave ->
+            val format = readWaveFormat(wave)
+            wave.seek(format.dataOffset)
+            val frameCount = format.dataSize / (format.channels * 2)
+            require(frameCount > 0) { "WAV contains no PCM frames" }
+            val monoSamples = ShortArray(frameCount)
+            repeat(frameCount) { frame ->
+                var total = 0
+                repeat(format.channels) { total += readSignedPcmSample(wave) }
+                monoSamples[frame] = (total / format.channels).toShort()
+            }
+
+            val outputFrames = ceil(
+                frameCount.toDouble() * OUTPUT_SAMPLE_RATE / format.sampleRate
+            ).toInt().coerceAtLeast(1)
+            val output = ByteArray(outputFrames * 2)
+            repeat(outputFrames) { index ->
+                val sourcePosition = index.toDouble() * format.sampleRate / OUTPUT_SAMPLE_RATE
+                val lowerIndex = sourcePosition.toInt().coerceIn(0, frameCount - 1)
+                val upperIndex = (lowerIndex + 1).coerceAtMost(frameCount - 1)
+                val fraction = sourcePosition - lowerIndex
+                val sample = (
+                    monoSamples[lowerIndex] * (1.0 - fraction) +
+                        monoSamples[upperIndex] * fraction
+                    ).roundToInt().coerceIn(Short.MIN_VALUE.toInt(), Short.MAX_VALUE.toInt())
+                output[index * 2] = (sample and 0xff).toByte()
+                output[index * 2 + 1] = ((sample shr 8) and 0xff).toByte()
+            }
+            return output
         }
     }
 
-    private fun streamWaveFile(operation: SynthesisOperation, file: File) {
-        RandomAccessFile(file, "r").use { wave ->
-            val format = readWaveFormat(wave)
+    private fun streamPcm(operation: SynthesisOperation, pcm: ByteArray) {
+        val chunkSize = 8192
+        var offset = 0
+        while (offset < pcm.size) {
+            val count = minOf(chunkSize, pcm.size - offset)
             synchronized(operationLock) {
                 ensureActiveLocked(operation)
-                val result = operation.callback.start(
-                    format.sampleRate,
-                    AudioFormat.ENCODING_PCM_16BIT,
-                    format.channels
-                )
-                check(result == TextToSpeech.SUCCESS) { "Synthesis callback rejected audio" }
+                val result = operation.callback.audioAvailable(pcm, offset, count)
+                check(result == TextToSpeech.SUCCESS) { "Synthesis callback rejected audio data" }
             }
-
-            wave.seek(format.dataOffset)
-            var remaining = format.dataSize
-            val frameSize = format.channels * 2
-            val buffer = ByteArray(8192 - (8192 % frameSize))
-            while (remaining > 0) {
-                val count = minOf(buffer.size, remaining)
-                val read = wave.read(buffer, 0, count)
-                check(read == count) { "Unexpected end of WAV data" }
-                synchronized(operationLock) {
-                    ensureActiveLocked(operation)
-                    val result = operation.callback.audioAvailable(buffer, 0, read)
-                    check(result == TextToSpeech.SUCCESS) { "Synthesis callback rejected audio data" }
-                }
-                remaining -= read
-            }
-
-            synchronized(operationLock) {
-                ensureActiveLocked(operation)
-                operation.callbackFinished = true
-                operation.callback.done()
-            }
+            offset += count
         }
     }
 
@@ -295,6 +370,11 @@ class ShengProxyTtsService : TextToSpeechService() {
         return low or (high shl 8)
     }
 
+    private fun readSignedPcmSample(file: RandomAccessFile): Int {
+        val sample = readLittleEndianShort(file)
+        return if (sample >= 0x8000) sample - 0x10000 else sample
+    }
+
     private fun readLittleEndianInt(file: RandomAccessFile): Int {
         val b0 = file.readUnsignedByte()
         val b1 = file.readUnsignedByte()
@@ -324,13 +404,14 @@ class ShengProxyTtsService : TextToSpeechService() {
     }
 
     private fun cleanupIfSafe(operation: SynthesisOperation) {
-        val mayDelete = synchronized(operationLock) {
+        val filesToDelete = synchronized(operationLock) {
             val safe = !operation.synthesisStarted ||
                     (operation.synthesisTerminal && operation.consumerFinished)
-            if (safe) operations.remove(operation)
-            safe
+            if (!safe) return
+            operations.remove(operation)
+            operation.files.toList().also { operation.files.clear() }
         }
-        if (mayDelete) operation.file?.delete()
+        filesToDelete.forEach(File::delete)
         synchronized(operationLock) {
             if (activeOperation === operation) activeOperation = null
         }
@@ -362,7 +443,7 @@ class ShengProxyTtsService : TextToSpeechService() {
             Log.e(tag, "Internal TTS shutdown failed", e)
         }
         pendingOperations.forEach {
-            markSynthesisTerminal(it, false)
+            it.currentUtteranceId?.let { id -> markSynthesisTerminal(id, false) }
             cleanupIfSafe(it)
         }
         scope.cancel()
