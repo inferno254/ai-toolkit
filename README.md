@@ -1,4 +1,11 @@
 # Sheng Mode for Screen Readers - AI for Accessibility Toolkit
+## Team
+
+- Erick Neko
+- Kelvin Karanja
+- Timothy Gitau Muchiri
+- Melvin Khakabo
+- Antony Shikanda
 
 ## Project Overview
 
@@ -131,13 +138,7 @@ The standalone web reader and Chrome extension use local Toolkit packages for an
 
 Android remains separate and is not integrated with the Toolkit by this browser-only work.
 
-## Team
 
-- Erick Neko
-- Kelvin Karanja
-- Timothy Gitau Muchiri
-- Melvin Khakabo
-- Antony Shikanda
 
 ## Event
 
